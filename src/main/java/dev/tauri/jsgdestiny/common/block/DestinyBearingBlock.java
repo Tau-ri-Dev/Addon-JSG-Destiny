@@ -66,6 +66,7 @@ public class DestinyBearingBlock extends TickableBEBlock implements IHighlightBl
     @Override
     @ParametersAreNonnullByDefault
     @Nonnull
+    @SuppressWarnings("deprecation")
     public VoxelShape getShape(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos, CollisionContext collisionContext) {
         return Shapes.block();
     }
@@ -141,7 +142,7 @@ public class DestinyBearingBlock extends TickableBEBlock implements IHighlightBl
 
     @Override
     @ParametersAreNonnullByDefault
-    public void setPlacedBy(Level level, BlockPos blockPos, BlockState blockState, @javax.annotation.Nullable LivingEntity livingEntity, ItemStack itemStack) {
+    public void setPlacedBy(Level level, BlockPos blockPos, BlockState blockState, @Nullable LivingEntity livingEntity, ItemStack itemStack) {
         super.setPlacedBy(level, blockPos, blockState, livingEntity, itemStack);
         if (level.isClientSide) return;
     }

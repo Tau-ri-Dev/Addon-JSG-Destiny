@@ -2,6 +2,7 @@ package dev.tauri.jsgdestiny.common.item;
 
 import dev.tauri.jsg.item.JSGBlockItem;
 import dev.tauri.jsg.item.JSGModelOBJInGUIRenderer;
+import dev.tauri.jsgdestiny.client.ModelsHolder;
 import dev.tauri.jsgdestiny.common.block.DestinyBearingBlock;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.network.chat.Component;
@@ -46,6 +47,12 @@ public class DestinyBearingItem extends JSGBlockItem {
     @OnlyIn(Dist.CLIENT)
     public JSGModelOBJInGUIRenderer.RenderPartInterface getRenderPartInterface() {
         return (itemStack, itemDisplayContext, stack, bufferSource, light, overlay) -> {
+            stack.pushPose();
+            stack.translate(0, 0.3f, 0);
+            stack.scale(2.5f, 2.5f, 2.5f);
+            ModelsHolder.DESTINY_BEARING_BODY.bindTextureAndRender(stack);
+            ModelsHolder.DESTINY_BEARING_LIGHT.bindTextureAndRender(stack);
+            stack.popPose();
         };
     }
 }

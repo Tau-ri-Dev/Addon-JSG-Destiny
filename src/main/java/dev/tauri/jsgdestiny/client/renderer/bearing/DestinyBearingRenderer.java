@@ -1,4 +1,4 @@
-package dev.tauri.jsgdestiny.client.renderer;
+package dev.tauri.jsgdestiny.client.renderer.bearing;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -7,8 +7,10 @@ import dev.tauri.jsg.config.JSGConfig;
 import dev.tauri.jsg.helpers.BlockPosHelper;
 import dev.tauri.jsg.loader.model.OBJModel;
 import dev.tauri.jsg.property.JSGProperties;
+import dev.tauri.jsg.renderer.activation.Activation;
 import dev.tauri.jsgdestiny.Constants;
 import dev.tauri.jsgdestiny.client.ModelsHolder;
+import dev.tauri.jsgdestiny.client.renderer.activation.BearingActivation;
 import dev.tauri.jsgdestiny.common.blockentity.DestinyBearingBE;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.LightTexture;
@@ -58,6 +60,7 @@ public class DestinyBearingRenderer implements BlockEntityRenderer<DestinyBearin
     @ParametersAreNonnullByDefault
     public void render(DestinyBearingBE blockEntity, float partTicks, PoseStack stack, MultiBufferSource pBuffer, int light, int overlay) {
         if (blockEntity.getLevel() == null) return;
+        var rs = blockEntity.rendererState;
         light = getCombinedLight(blockEntity);
         blockEntity.getLevel().updateSkyBrightness();
         OBJModel.renderType = OBJModel.EnumOBJRenderMethod.NORMAL;
@@ -70,17 +73,18 @@ public class DestinyBearingRenderer implements BlockEntityRenderer<DestinyBearin
         RenderSystem.enableBlend();
         stack.translate(0.5, 0.5, 0.5);
         stack.mulPose(Axis.YP.rotationDegrees(getRotation(blockEntity)));
+        var y = DestinyBearingHeightAdjust.getY(blockEntity);
         switch (JSGConfig.Stargate.stargateSize.get()) {
             case SMALL:
-                stack.translate(0, 0.08f, 0);
+                stack.translate(0, y, 0);
                 stack.scale(3.2f, 3.2f, 3.2f);
                 break;
             case LARGE:
-                stack.translate(0, 1.2f, 0);
+                stack.translate(0, y, 0);
                 stack.scale(5.2f, 5.2f, 5.2f);
                 break;
             default:
-                stack.translate(0, 1.2f, 0);
+                stack.translate(0, y, 0);
                 stack.scale(4.2f, 4.2f, 4.2f);
                 break;
         }
@@ -88,9 +92,18 @@ public class DestinyBearingRenderer implements BlockEntityRenderer<DestinyBearin
         RenderSystem.clearColor(1, 1, 1, 1);
         ModelsHolder.DESTINY_BEARING_BODY.bindTextureAndRender(stack);
 
-        var active = blockEntity.isActive();
-        Constants.LOADERS_HOLDER.texture().getTexture(Constants.LOADERS_HOLDER.texture().getTextureResource(active ? TEXTURE_ON : TEXTURE_OFF)).bindTexture();
-        ModelsHolder.DESTINY_BEARING_LIGHT.render(stack, active);
+        var active = rs.active;
+        if (rs.lastActiveState != active) {
+            rs.lastActiveState = active;
+            rs.activations.add(new BearingActivation(null, blockEntity.getLevel().getGameTime(), !active));
+        }
+        Activation.iterate(rs.activations, blockEntity.getLevel().getGameTime(), partTicks, (ignored, state) -> rs.currentState = state);
+        if (rs.currentState > 0)
+            OBJModel.setDynamicLightning(rs.currentState + 0.3f);
+
+        Constants.LOADERS_HOLDER.texture().getTexture(Constants.LOADERS_HOLDER.texture().getTextureResource(rs.currentState >= 0.3f ? TEXTURE_ON : TEXTURE_OFF)).bindTexture();
+        ModelsHolder.DESTINY_BEARING_LIGHT.render(stack, rs.currentState > 0);
+        OBJModel.resetDynamicLightning();
         stack.popPose();
     }
 

@@ -1,7 +1,7 @@
 package dev.tauri.jsgdestiny.common.registry;
 
 import dev.tauri.jsgdestiny.JSGDestiny;
-import dev.tauri.jsgdestiny.client.renderer.DestinyBearingRenderer;
+import dev.tauri.jsgdestiny.client.renderer.bearing.DestinyBearingRenderer;
 import dev.tauri.jsgdestiny.common.blockentity.DestinyBearingBE;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;

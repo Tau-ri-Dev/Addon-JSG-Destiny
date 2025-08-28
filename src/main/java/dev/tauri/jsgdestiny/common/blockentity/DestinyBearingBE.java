@@ -89,7 +89,7 @@ public class DestinyBearingBE extends BlockEntity implements ITickable, StatePro
             addTask(lastDeactivationTask);
         }
         setChanged();
-        getAndSendState(DestinyBearingRendererState.STATE);
+        getAndSendState(DestinyBearingRendererState.STATE_TYPE);
     }
 
     public void deactivate() {
@@ -97,7 +97,7 @@ public class DestinyBearingBE extends BlockEntity implements ITickable, StatePro
         lastDeactivationTask = null;
         this.isActive = false;
         setChanged();
-        getAndSendState(DestinyBearingRendererState.STATE);
+        getAndSendState(DestinyBearingRendererState.STATE_TYPE);
     }
 
     // ------------------------------------------------------------------------
@@ -130,27 +130,28 @@ public class DestinyBearingBE extends BlockEntity implements ITickable, StatePro
         }
     }
 
+    public final DestinyBearingRendererState rendererState = new DestinyBearingRendererState();
+
     @Override
     public State getState(StateTypeEnum stateTypeEnum) {
-        if (stateTypeEnum == DestinyBearingRendererState.STATE) {
-            var s = new DestinyBearingRendererState();
-            s.active = isActive;
-            return s;
+        if (stateTypeEnum == DestinyBearingRendererState.STATE_TYPE) {
+            rendererState.active = isActive;
+            return rendererState;
         }
         return null;
     }
 
     @Override
     public State createState(StateTypeEnum stateTypeEnum) {
-        if (stateTypeEnum == DestinyBearingRendererState.STATE)
+        if (stateTypeEnum == DestinyBearingRendererState.STATE_TYPE)
             return new DestinyBearingRendererState();
         return null;
     }
 
     @Override
     public void setState(StateTypeEnum stateTypeEnum, State state) {
-        if (stateTypeEnum == DestinyBearingRendererState.STATE) {
-            this.isActive = ((DestinyBearingRendererState) state).active;
+        if (stateTypeEnum == DestinyBearingRendererState.STATE_TYPE) {
+            rendererState.active = ((DestinyBearingRendererState) state).active;
             setChanged();
         }
     }
@@ -211,7 +212,7 @@ public class DestinyBearingBE extends BlockEntity implements ITickable, StatePro
                 }
             }
         } else {
-            JSGPacketHandler.sendToServer(new StateUpdateRequestToServer(getBlockPos(), DestinyBearingRendererState.STATE));
+            JSGPacketHandler.sendToServer(new StateUpdateRequestToServer(getBlockPos(), DestinyBearingRendererState.STATE_TYPE));
         }
     }
 
