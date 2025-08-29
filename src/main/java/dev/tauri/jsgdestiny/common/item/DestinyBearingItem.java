@@ -48,7 +48,7 @@ public class DestinyBearingItem extends JSGBlockItem {
     public JSGModelOBJInGUIRenderer.RenderPartInterface getRenderPartInterface() {
         return (itemStack, itemDisplayContext, stack, bufferSource, light, overlay) -> {
             stack.pushPose();
-            stack.translate(0, 0.3f, 0);
+            stack.translate(0, 0.4f, 0);
             stack.scale(2.5f, 2.5f, 2.5f);
             ModelsHolder.DESTINY_BEARING_BODY.bindTextureAndRender(stack);
             ModelsHolder.DESTINY_BEARING_LIGHT.bindTextureAndRender(stack);

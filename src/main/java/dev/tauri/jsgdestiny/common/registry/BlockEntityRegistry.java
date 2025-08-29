@@ -1,8 +1,10 @@
 package dev.tauri.jsgdestiny.common.registry;
 
 import dev.tauri.jsgdestiny.JSGDestiny;
+import dev.tauri.jsgdestiny.client.renderer.DestinyFloorChevronRenderer;
 import dev.tauri.jsgdestiny.client.renderer.bearing.DestinyBearingRenderer;
 import dev.tauri.jsgdestiny.common.blockentity.DestinyBearingBE;
+import dev.tauri.jsgdestiny.common.blockentity.DestinyFloorChevronBE;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -21,6 +23,7 @@ public class BlockEntityRegistry {
     public static final DeferredRegister<BlockEntityType<?>> REGISTER = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, JSGDestiny.MOD_ID);
 
     public static final RegistryObject<BlockEntityType<DestinyBearingBE>> DESTINY_BEARING = registerBE("destiny_bearing", DestinyBearingBE::new, BlockRegistry.DESTINY_BEARING);
+    public static final RegistryObject<BlockEntityType<DestinyFloorChevronBE>> DESTINY_FLOOR_CHEVRON = registerBE("destiny_floor_chevron", DestinyFloorChevronBE::new, BlockRegistry.DESTINY_FLOOR_CHEVRON);
 
 
     private static <T extends BlockEntity> RegistryObject<BlockEntityType<T>> registerBE(String name, BlockEntityType.BlockEntitySupplier<T> beSupplier, Supplier<? extends Block> blockSupplier) {
@@ -47,5 +50,6 @@ public class BlockEntityRegistry {
     @SubscribeEvent
     public static void registerBERs(EntityRenderersEvent.RegisterRenderers event) {
         event.registerBlockEntityRenderer(DESTINY_BEARING.get(), DestinyBearingRenderer::new);
+        event.registerBlockEntityRenderer(DESTINY_FLOOR_CHEVRON.get(), DestinyFloorChevronRenderer::new);
     }
 }

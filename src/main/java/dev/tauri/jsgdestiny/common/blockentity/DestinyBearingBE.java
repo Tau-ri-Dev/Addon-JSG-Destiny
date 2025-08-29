@@ -24,6 +24,7 @@ import dev.tauri.jsgdestiny.common.state.DestinyBearingRendererState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
@@ -35,6 +36,10 @@ import java.util.List;
 public class DestinyBearingBE extends BlockEntity implements ITickable, StateProviderInterface, ScheduledTaskExecutorInterface, IStargateListener {
     public DestinyBearingBE(BlockPos pPos, BlockState pBlockState) {
         super(BlockEntityRegistry.DESTINY_BEARING.get(), pPos, pBlockState);
+    }
+
+    public DestinyBearingBE(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState) {
+        super(pType, pPos, pBlockState);
     }
 
     @Override
@@ -177,6 +182,36 @@ public class DestinyBearingBE extends BlockEntity implements ITickable, StatePro
         }
     }
 
+    @Nullable
+    protected StargateAbstractBaseBE getLinkableStargate() {
+        if (getLevel() == null) return null;
+        var belowBlock = getLevel().getBlockState(getBlockPos().below()).getBlock();
+        if (!(belowBlock instanceof IStargateChevronBlock)) return null;
+        var belowBE = getLevel().getBlockEntity(getBlockPos().below());
+        if (!(belowBE instanceof StargateAbstractMemberBE stargateMember)) return null;
+        return stargateMember.getBaseTile(getLevel());
+    }
+
+    protected void updateLink() {
+        if (getLevel() == null) return;
+        if (gateBasePos == null) {
+            var base = getLinkableStargate();
+            if (base != null) {
+                gateBasePos = base.getBlockPos();
+                setChanged();
+                base.listenerHandler.addListener(this);
+                JSGDestiny.logger.info("added to listeners");
+            }
+        } else {
+            var gState = getLevel().getBlockState(gateBasePos);
+            if (!gState.is(TagsRegistry.ALL_STARGATE_BASES) || !(getLevel().getBlockEntity(gateBasePos) instanceof StargateAbstractBaseBE)) {
+                gateBasePos = null;
+                setChanged();
+                JSGDestiny.logger.info("removed from listeners");
+            }
+        }
+    }
+
     @Override
     public void tick() {
         if (getLevel() == null) return;
@@ -188,29 +223,7 @@ public class DestinyBearingBE extends BlockEntity implements ITickable, StatePro
                 targetPoint = new PacketDistributor.TargetPoint(pos.getX(), pos.getY(), pos.getZ(), 512, getLevel().dimension());
                 setChanged();
             }
-
-            if (gateBasePos == null) {
-                var belowBlock = getLevel().getBlockState(getBlockPos().below()).getBlock();
-                if (belowBlock instanceof IStargateChevronBlock) {
-                    var belowBE = getLevel().getBlockEntity(getBlockPos().below());
-                    if (belowBE instanceof StargateAbstractMemberBE stargateMember) {
-                        var base = stargateMember.getBaseTile(getLevel());
-                        if (base != null) {
-                            gateBasePos = base.getBlockPos();
-                            setChanged();
-                            base.listenerHandler.addListener(this);
-                            JSGDestiny.logger.info("added to listeners");
-                        }
-                    }
-                }
-            } else {
-                var gState = getLevel().getBlockState(gateBasePos);
-                if (!gState.is(TagsRegistry.ALL_STARGATE_BASES) || !(getLevel().getBlockEntity(gateBasePos) instanceof StargateAbstractBaseBE)) {
-                    gateBasePos = null;
-                    setChanged();
-                    JSGDestiny.logger.info("removed from listeners");
-                }
-            }
+            updateLink();
         } else {
             JSGPacketHandler.sendToServer(new StateUpdateRequestToServer(getBlockPos(), DestinyBearingRendererState.STATE_TYPE));
         }

@@ -1,0 +1,20 @@
+{
+  "_comment10": "----------------- CREATIVE TABS ------------------",
+
+  "itemGroup.jsg_destiny": "JSG: Destiny",
+
+  "_comment200": "----------- BLOCKS / BLOCK ENTITIES --------------",
+
+  "block.jsg_destiny.destiny_floor_chevron": "Destiny's Floor Chevron",
+  "block.jsg_destiny.destiny_bearing": "Destiny's Bearing",
+
+  "_comment500": "------------------- Tool Tips --------------------",
+
+  "_comment512": ">>> Blocks / Block Entities <<<<<<<<<<<<<<<<<<<<<<",
+
+  "block.jsg_destiny.destiny_floor_chevron.tooltip": "Lights up when the linked gate is active",
+  "block.jsg_destiny.destiny_floor_chevron.tooltip.extended": "Place this block nearby gate%nl%to link with that gate.",
+
+  "block.jsg_destiny.destiny_bearing.tooltip": "Lights up when engaging symbol or when the gate is active",
+  "block.jsg_destiny.destiny_bearing.tooltip.extended": "Place this block touching top side of the top gate's chevron%nl%to link with the gate."
+}

@@ -14,7 +14,9 @@ import java.util.Map;
 
 public enum ModelsHolder implements IModelsHolder {
     DESTINY_BEARING_BODY("bearing/bearing_body.obj", "bearing/bearing_body.png", false),
-    DESTINY_BEARING_LIGHT("bearing/bearing_light.obj", "bearing/bearing_light_on.png", false)
+    DESTINY_BEARING_LIGHT("bearing/bearing_light.obj", "bearing/bearing_light_on.png", false),
+
+    DESTINY_CHEVRON("floor_chevron.obj", "", false)
     ;
 
     public final ResourceLocation model;

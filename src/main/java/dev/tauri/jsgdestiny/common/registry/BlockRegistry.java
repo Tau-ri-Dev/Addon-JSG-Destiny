@@ -5,6 +5,7 @@ import dev.tauri.jsg.item.ITabbedItem;
 import dev.tauri.jsg.item.JSGBlockItem;
 import dev.tauri.jsgdestiny.JSGDestiny;
 import dev.tauri.jsgdestiny.common.block.DestinyBearingBlock;
+import dev.tauri.jsgdestiny.common.block.DestinyFloorChevronBlock;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -19,8 +20,10 @@ public class BlockRegistry {
     public static final DeferredRegister<Block> REGISTER = DeferredRegister.create(ForgeRegistries.BLOCKS, JSGDestiny.MOD_ID);
 
     public static final RegistryObject<Block> DESTINY_BEARING = REGISTER.register("destiny_bearing", DestinyBearingBlock::new);
+    public static final RegistryObject<Block> DESTINY_FLOOR_CHEVRON = REGISTER.register("destiny_floor_chevron", DestinyFloorChevronBlock::new);
 
 
+    @SuppressWarnings("all")
     public static void register(IEventBus bus) {
         for (RegistryObject<Block> i : REGISTER.getEntries().stream().toList()) {
             ItemRegistry.REGISTER.register(i.getId().getPath(),
