@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "JSG Destiny",
+  "category": "misc",
+  "pattern": [
+    "JJJ",
+    "TBT",
+    " L "
+  ],
+  "key": {
+    "J": {
+      "tag": "forge:ingots/titanium"
+    },
+    "T": {
+      "tag": "forge:ingots/naquadah_alloy"
+    },
+    "B": {
+      "tag": "forge:storage_blocks/naquadah_alloy"
+    },
+    "L": {
+      "item": "jsg_destiny:bearing_ball"
+    }
+  },
+  "result": {
+    "item": "jsg_destiny:destiny_bearing",
+    "count": 1
+  }
+}
