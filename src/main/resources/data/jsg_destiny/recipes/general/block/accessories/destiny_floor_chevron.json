@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "JSG Destiny",
+  "category": "misc",
+  "pattern": [
+    "CTC",
+    "GBG",
+    "TGT"
+  ],
+  "key": {
+    "G": {
+      "tag": "forge:glass_panes/colorless"
+    },
+    "B": {
+      "item": "jsg_destiny:universal_light_bulb"
+    },
+    "T": {
+      "tag": "forge:ingots/titanium"
+    },
+    "C": {
+      "tag": "forge:ingots/copper"
+    }
+  },
+  "result": {
+    "item": "jsg_destiny:destiny_floor_chevron",
+    "count": 1
+  }
+}

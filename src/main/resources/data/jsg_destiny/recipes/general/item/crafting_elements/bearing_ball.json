@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "JSG Destiny",
+  "category": "misc",
+  "pattern": [
+    "III",
+    "GBG",
+    "GGG"
+  ],
+  "key": {
+    "G": {
+      "tag": "forge:glass_panes/colorless"
+    },
+    "B": {
+      "item": "jsg_destiny:universal_light_bulb"
+    },
+    "I": {
+      "tag": "forge:ingots/naquadah_alloy"
+    }
+  },
+  "result": {
+    "item": "jsg_destiny:bearing_ball",
+    "count": 1
+  }
+}

@@ -3,6 +3,13 @@
 
   "itemGroup.jsg_destiny": "JSG: Destiny",
 
+  "_comment100": "--------------------- ITEMS ----------------------",
+
+  "_comment101": ">>> Crafting elements<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+
+  "item.jsg_destiny.universal_light_bulb": "Universal Light Bulb",
+  "item.jsg_destiny.bearing_ball": "Bearing Light Ball",
+
   "_comment200": "----------- BLOCKS / BLOCK ENTITIES --------------",
 
   "block.jsg_destiny.destiny_floor_chevron": "Destiny's Floor Chevron",

@@ -1,0 +1,56 @@
+{
+  "criteria": {
+    "has_naquadah": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:ingots/naquadah_alloy"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_glass": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:glass_pane/colorless"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_bulb": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "jsg_destiny:universal_light_bulb"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "jsg_destiny:general/item/crafting_elements/bearing_ball"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_bulb",
+      "has_naquadah",
+      "has_glass",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "jsg_destiny:general/item/crafting_elements/bearing_ball"
+    ]
+  },
+  "sends_telemetry_event": false
+}

@@ -1,0 +1,54 @@
+{
+  "criteria": {
+    "has_titanium": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:ingots/titanium"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_glass": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:glass_pane/colorless"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_gold": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:nuggets/gold"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "jsg_destiny:general/item/crafting_elements/universal_light_bulb"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_titanium",
+      "has_gold",
+      "has_glass",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "jsg_destiny:general/item/crafting_elements/universal_light_bulb"
+    ]
+  },
+  "sends_telemetry_event": false
+}
