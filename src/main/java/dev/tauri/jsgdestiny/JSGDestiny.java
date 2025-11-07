@@ -3,6 +3,7 @@ package dev.tauri.jsgdestiny;
 import dev.tauri.jsg.JSG;
 import dev.tauri.jsg.LoggerWrapper;
 import dev.tauri.jsg.api.JSGAddon;
+import dev.tauri.jsgdestiny.common.expansion.ScheduledTasksRegistry;
 import dev.tauri.jsgdestiny.common.packet.JSGDPacketHandler;
 import dev.tauri.jsgdestiny.common.registry.BlockEntityRegistry;
 import dev.tauri.jsgdestiny.common.registry.BlockRegistry;
@@ -40,6 +41,8 @@ public class JSGDestiny implements JSGAddon {
         BlockRegistry.register(modEventBus);
         TabRegistry.register(modEventBus);
         BlockEntityRegistry.register(modEventBus);
+
+        ScheduledTasksRegistry.load();
 
         JSGDPacketHandler.init();
 

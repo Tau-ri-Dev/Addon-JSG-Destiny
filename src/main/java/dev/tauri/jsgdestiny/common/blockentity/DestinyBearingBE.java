@@ -11,7 +11,7 @@ import dev.tauri.jsg.packet.JSGPacketHandler;
 import dev.tauri.jsg.packet.packets.StateUpdatePacketToClient;
 import dev.tauri.jsg.packet.packets.StateUpdateRequestToServer;
 import dev.tauri.jsg.registry.TagsRegistry;
-import dev.tauri.jsg.stargate.EnumScheduledTask;
+import dev.tauri.jsg.stargate.ScheduledTaskType;
 import dev.tauri.jsg.stargate.StargateOpenResult;
 import dev.tauri.jsg.stargate.network.SymbolInterface;
 import dev.tauri.jsg.state.State;
@@ -19,6 +19,7 @@ import dev.tauri.jsg.state.StateProviderInterface;
 import dev.tauri.jsg.state.StateTypeEnum;
 import dev.tauri.jsg.util.ITickable;
 import dev.tauri.jsgdestiny.JSGDestiny;
+import dev.tauri.jsgdestiny.common.expansion.ScheduledTasksRegistry;
 import dev.tauri.jsgdestiny.common.registry.BlockEntityRegistry;
 import dev.tauri.jsgdestiny.common.state.DestinyBearingRendererState;
 import net.minecraft.core.BlockPos;
@@ -90,7 +91,7 @@ public class DestinyBearingBE extends BlockEntity implements ITickable, StatePro
             removeTask(lastDeactivationTask);
         lastDeactivationTask = null;
         if (time > 0) {
-            lastDeactivationTask = new ScheduledTask(EnumScheduledTask.STARGATE_CHEVRON_DIM, time);
+            lastDeactivationTask = new ScheduledTask(ScheduledTasksRegistry.DESTINY_BEARING_RENDER_UPDATE, time);
             addTask(lastDeactivationTask);
         }
         setChanged();
@@ -129,8 +130,8 @@ public class DestinyBearingBE extends BlockEntity implements ITickable, StatePro
     }
 
     @Override
-    public void executeTask(EnumScheduledTask enumScheduledTask, @Nullable CompoundTag compoundTag) {
-        if (enumScheduledTask == EnumScheduledTask.STARGATE_CHEVRON_DIM) {
+    public void executeTask(ScheduledTaskType enumScheduledTask, @Nullable CompoundTag compoundTag) {
+        if (enumScheduledTask == ScheduledTasksRegistry.DESTINY_BEARING_RENDER_UPDATE) {
             deactivate();
         }
     }
