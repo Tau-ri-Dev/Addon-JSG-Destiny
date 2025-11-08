@@ -16,8 +16,8 @@ import java.util.List;
 public class ItemRegistry {
     public static final DeferredRegister<Item> REGISTER = DeferredRegister.create(ForgeRegistries.ITEMS, JSGDestiny.MOD_ID);
 
-    public static final RegistryObject<JSGItem> UNIVERSAL_BULB = Constants.ITEM_HELPER.builder("universal_light_bulb").clearTooltip().setInTabs(List.of(TabRegistry.TAB_DESTINY)).buildGeneric();
-    public static final RegistryObject<JSGItem> BEARING_BALL = Constants.ITEM_HELPER.builder("bearing_ball").clearTooltip().setInTabs(List.of(TabRegistry.TAB_DESTINY)).buildGeneric();
+    public static final RegistryObject<JSGItem> UNIVERSAL_BULB = Constants.ITEM_HELPER.builder("universal_light_bulb").clearTooltip().setInTabs(List.of(TabRegistry.TAB_DESTINY, dev.tauri.jsg.registry.TabRegistry.TAB_RESOURCES)).buildGeneric();
+    public static final RegistryObject<JSGItem> BEARING_BALL = Constants.ITEM_HELPER.builder("bearing_ball").clearTooltip().setInTabs(List.of(TabRegistry.TAB_DESTINY, dev.tauri.jsg.registry.TabRegistry.TAB_RESOURCES)).buildGeneric();
 
     public static void register(IEventBus bus) {
         TabHelper.indexItemRegistry(() -> REGISTER);

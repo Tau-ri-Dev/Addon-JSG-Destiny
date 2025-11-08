@@ -137,7 +137,7 @@ public class DestinyBearingBlock extends TickableBEBlock implements IHighlightBl
 
     @Override
     public List<RegistryObject<CreativeModeTab>> getTabs() {
-        return List.of(TabRegistry.TAB_DESTINY);
+        return List.of(TabRegistry.TAB_DESTINY, dev.tauri.jsg.registry.TabRegistry.TAB_TRANSPORTATION);
     }
 
     @Override

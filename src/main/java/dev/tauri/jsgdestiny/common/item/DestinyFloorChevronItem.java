@@ -1,6 +1,5 @@
 package dev.tauri.jsgdestiny.common.item;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.math.Axis;
 import dev.tauri.jsg.JSG;
 import dev.tauri.jsg.item.JSGModelOBJInGUIRenderer;
