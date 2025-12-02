@@ -12,8 +12,9 @@ import dev.tauri.jsg.packet.packets.StateUpdatePacketToClient;
 import dev.tauri.jsg.packet.packets.StateUpdateRequestToServer;
 import dev.tauri.jsg.registry.TagsRegistry;
 import dev.tauri.jsg.stargate.ScheduledTaskType;
-import dev.tauri.jsg.stargate.StargateOpenResult;
+import dev.tauri.jsg.stargate.Stargate;
 import dev.tauri.jsg.stargate.network.SymbolInterface;
+import dev.tauri.jsg.stargate.result.StargateOpenResult;
 import dev.tauri.jsg.state.State;
 import dev.tauri.jsg.state.StateProviderInterface;
 import dev.tauri.jsg.state.StateTypeEnum;
@@ -24,6 +25,7 @@ import dev.tauri.jsgdestiny.common.registry.BlockEntityRegistry;
 import dev.tauri.jsgdestiny.common.state.DestinyBearingRendererState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -110,7 +112,7 @@ public class DestinyBearingBE extends BlockEntity implements ITickable, StatePro
     // Scheduled tasks
 
     /**
-     * List of scheduled tasks to be performed on {@link ITickable#tick()()}.
+     * List of scheduled tasks to be performed on {@link ITickable#tick(net.minecraft.world.level.Level)()}.
      */
     protected List<ScheduledTask> scheduledTasks = new ArrayList<>();
 
@@ -184,7 +186,7 @@ public class DestinyBearingBE extends BlockEntity implements ITickable, StatePro
     }
 
     @Nullable
-    protected StargateAbstractBaseBE getLinkableStargate() {
+    protected Stargate<?, ?> getLinkableStargate() {
         if (getLevel() == null) return null;
         var belowBlock = getLevel().getBlockState(getBlockPos().below()).getBlock();
         if (!(belowBlock instanceof IStargateChevronBlock)) return null;
@@ -200,7 +202,7 @@ public class DestinyBearingBE extends BlockEntity implements ITickable, StatePro
             if (base != null) {
                 gateBasePos = base.getBlockPos();
                 setChanged();
-                base.listenerHandler.addListener(this);
+                base.getListenerHandler().addListener(this);
                 JSGDestiny.logger.info("added to listeners");
             }
         } else {
@@ -214,14 +216,13 @@ public class DestinyBearingBE extends BlockEntity implements ITickable, StatePro
     }
 
     @Override
-    public void tick() {
-        if (getLevel() == null) return;
+    public void tick(@NotNull Level level) {
         // Scheduled tasks
-        ScheduledTask.iterate(scheduledTasks, getLevel().getGameTime());
-        if (!getLevel().isClientSide) {
+        ScheduledTask.iterate(scheduledTasks, level.getGameTime());
+        if (!level.isClientSide) {
             var pos = getBlockPos();
             if (targetPoint == null) {
-                targetPoint = new PacketDistributor.TargetPoint(pos.getX(), pos.getY(), pos.getZ(), 512, getLevel().dimension());
+                targetPoint = new PacketDistributor.TargetPoint(pos.getX(), pos.getY(), pos.getZ(), 512, level.dimension());
                 setChanged();
             }
             updateLink();
