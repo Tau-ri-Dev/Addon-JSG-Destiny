@@ -1,7 +1,7 @@
 package dev.tauri.jsgdestiny.common.registry;
 
+import dev.tauri.jsg.api.item.JSGItem;
 import dev.tauri.jsg.helpers.TabHelper;
-import dev.tauri.jsg.item.JSGItem;
 import dev.tauri.jsgdestiny.Constants;
 import dev.tauri.jsgdestiny.JSGDestiny;
 import net.minecraft.world.item.Item;

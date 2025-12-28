@@ -1,8 +1,8 @@
 package dev.tauri.jsgdestiny;
 
+import dev.tauri.jsg.api.client.LoadersHolder;
 import dev.tauri.jsg.helpers.TabHelper;
 import dev.tauri.jsg.helpers.registry.item.ItemRegistryHelperGeneric;
-import dev.tauri.jsg.loader.LoadersHolder;
 import dev.tauri.jsgdestiny.common.registry.ItemRegistry;
 import dev.tauri.jsgdestiny.common.registry.TabRegistry;
 

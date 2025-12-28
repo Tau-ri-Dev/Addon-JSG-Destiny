@@ -1,8 +1,8 @@
 package dev.tauri.jsgdestiny.client;
 
-import dev.tauri.jsg.loader.IModelsHolder;
-import dev.tauri.jsg.loader.LoadersHolder;
-import dev.tauri.jsg.stargate.BiomeOverlayRegistry;
+import dev.tauri.jsg.api.client.IModelsHolder;
+import dev.tauri.jsg.api.client.LoadersHolder;
+import dev.tauri.jsg.api.registry.BiomeOverlayRegistry;
 import dev.tauri.jsgdestiny.Constants;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;

@@ -1,6 +1,6 @@
 package dev.tauri.jsgdestiny.common.block;
 
-import dev.tauri.jsg.item.JSGBlockItem;
+import dev.tauri.jsg.api.item.JSGBlockItem;
 import dev.tauri.jsgdestiny.common.blockentity.DestinyFloorChevronBE;
 import dev.tauri.jsgdestiny.common.item.DestinyFloorChevronItem;
 import net.minecraft.core.BlockPos;

@@ -1,8 +1,8 @@
 package dev.tauri.jsgdestiny.client.renderer.bearing;
 
+import dev.tauri.jsg.api.config.JSGConfig;
+import dev.tauri.jsg.api.stargate.StargateSizeEnum;
 import dev.tauri.jsg.blockentity.stargate.*;
-import dev.tauri.jsg.config.JSGConfig;
-import dev.tauri.jsg.stargate.StargateSizeEnum;
 import dev.tauri.jsgdestiny.common.blockentity.DestinyBearingBE;
 
 import java.util.Objects;

@@ -1,6 +1,6 @@
 package dev.tauri.jsgdestiny.common.item;
 
-import dev.tauri.jsg.item.JSGBlockItem;
+import dev.tauri.jsg.api.item.JSGBlockItem;
 import dev.tauri.jsg.item.JSGModelOBJInGUIRenderer;
 import dev.tauri.jsgdestiny.client.ModelsHolder;
 import dev.tauri.jsgdestiny.common.block.DestinyBearingBlock;
@@ -50,8 +50,8 @@ public class DestinyBearingItem extends JSGBlockItem {
             stack.pushPose();
             stack.translate(0, 0.4f, 0);
             stack.scale(2.5f, 2.5f, 2.5f);
-            ModelsHolder.DESTINY_BEARING_BODY.bindTextureAndRender(stack);
-            ModelsHolder.DESTINY_BEARING_LIGHT.bindTextureAndRender(stack);
+            ModelsHolder.DESTINY_BEARING_BODY.bindTexture().render(stack, bufferSource, light, overlay);
+            ModelsHolder.DESTINY_BEARING_LIGHT.bindTexture().render(stack, bufferSource, light, overlay);
             stack.popPose();
         };
     }

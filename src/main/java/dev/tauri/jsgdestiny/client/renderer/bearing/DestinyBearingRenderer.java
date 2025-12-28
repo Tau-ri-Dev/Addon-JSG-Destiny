@@ -3,10 +3,9 @@ package dev.tauri.jsgdestiny.client.renderer.bearing;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import dev.tauri.jsg.config.JSGConfig;
+import dev.tauri.jsg.api.blockstates.JSGProperties;
+import dev.tauri.jsg.api.config.JSGConfig;
 import dev.tauri.jsg.helpers.BlockPosHelper;
-import dev.tauri.jsg.loader.model.OBJModel;
-import dev.tauri.jsg.property.JSGProperties;
 import dev.tauri.jsg.renderer.activation.Activation;
 import dev.tauri.jsgdestiny.Constants;
 import dev.tauri.jsgdestiny.client.ModelsHolder;
@@ -63,11 +62,6 @@ public class DestinyBearingRenderer implements BlockEntityRenderer<DestinyBearin
         var rs = blockEntity.rendererState;
         light = getCombinedLight(blockEntity);
         blockEntity.getLevel().updateSkyBrightness();
-        OBJModel.renderType = OBJModel.EnumOBJRenderMethod.NORMAL;
-        OBJModel.source = pBuffer;
-        OBJModel.packedLight = light;
-        OBJModel.resetRGB();
-        OBJModel.resetDynamicLightning();
 
         stack.pushPose();
         RenderSystem.enableBlend();
@@ -90,7 +84,7 @@ public class DestinyBearingRenderer implements BlockEntityRenderer<DestinyBearin
         }
 
         RenderSystem.clearColor(1, 1, 1, 1);
-        ModelsHolder.DESTINY_BEARING_BODY.bindTextureAndRender(stack);
+        ModelsHolder.DESTINY_BEARING_BODY.bindTexture().render(stack, pBuffer, light, overlay);
 
         var active = rs.active;
         if (rs.lastActiveState != active) {
@@ -98,12 +92,9 @@ public class DestinyBearingRenderer implements BlockEntityRenderer<DestinyBearin
             rs.activations.add(new BearingActivation(null, blockEntity.getLevel().getGameTime(), !active));
         }
         Activation.iterate(rs.activations, blockEntity.getLevel().getGameTime(), partTicks, (ignored, state) -> rs.currentState = state);
-        if (rs.currentState > 0)
-            OBJModel.setDynamicLightning(rs.currentState + 0.3f);
 
         Constants.LOADERS_HOLDER.texture().getTexture(Constants.LOADERS_HOLDER.texture().getTextureResource(rs.currentState >= 0.3f ? TEXTURE_ON : TEXTURE_OFF)).bindTexture();
-        ModelsHolder.DESTINY_BEARING_LIGHT.render(stack, rs.currentState > 0);
-        OBJModel.resetDynamicLightning();
+        ModelsHolder.DESTINY_BEARING_LIGHT.render(stack, pBuffer, light, rs.currentState > 0, rs.currentState > 0 ? rs.currentState + 0.3f : 1f);
         stack.popPose();
     }
 

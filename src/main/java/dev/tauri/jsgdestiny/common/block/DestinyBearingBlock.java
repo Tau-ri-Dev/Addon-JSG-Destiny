@@ -1,15 +1,15 @@
 package dev.tauri.jsgdestiny.common.block;
 
-import dev.tauri.jsg.block.IHighlightBlock;
-import dev.tauri.jsg.block.IItemBlock;
+import dev.tauri.jsg.api.block.util.IHighlightBlock;
+import dev.tauri.jsg.api.block.util.IItemBlock;
+import dev.tauri.jsg.api.block.util.WrenchRotatable;
+import dev.tauri.jsg.api.blockstates.JSGProperties;
+import dev.tauri.jsg.api.item.ITabbedItem;
+import dev.tauri.jsg.api.item.JSGBlockItem;
+import dev.tauri.jsg.api.stargate.Stargate;
 import dev.tauri.jsg.block.TickableBEBlock;
-import dev.tauri.jsg.block.WrenchRotatable;
 import dev.tauri.jsg.helpers.BlockPosHelper;
 import dev.tauri.jsg.helpers.ItemHelper;
-import dev.tauri.jsg.item.ITabbedItem;
-import dev.tauri.jsg.item.JSGBlockItem;
-import dev.tauri.jsg.property.JSGProperties;
-import dev.tauri.jsg.stargate.Stargate;
 import dev.tauri.jsgdestiny.common.blockentity.DestinyBearingBE;
 import dev.tauri.jsgdestiny.common.item.DestinyBearingItem;
 import dev.tauri.jsgdestiny.common.registry.TabRegistry;
@@ -156,7 +156,7 @@ public class DestinyBearingBlock extends TickableBEBlock implements IHighlightBl
         if (!(be instanceof DestinyBearingBE bearing)) return;
         if (bearing.gateBasePos == null) return;
         var gBE = level.getBlockEntity(bearing.gateBasePos);
-        if (!(gBE instanceof Stargate<?, ?> gate)) return;
+        if (!(gBE instanceof Stargate<?> gate)) return;
         gate.getListenerHandler().removeListener(bearing);
         bearing.gateBasePos = null;
     }

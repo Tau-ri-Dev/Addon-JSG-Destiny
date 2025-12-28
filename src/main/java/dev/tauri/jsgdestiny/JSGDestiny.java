@@ -1,8 +1,8 @@
 package dev.tauri.jsgdestiny;
 
-import dev.tauri.jsg.JSG;
-import dev.tauri.jsg.LoggerWrapper;
 import dev.tauri.jsg.api.JSGAddon;
+import dev.tauri.jsg.api.JSGApi;
+import dev.tauri.jsg.api.LoggerWrapper;
 import dev.tauri.jsgdestiny.common.expansion.ScheduledTasksRegistry;
 import dev.tauri.jsgdestiny.common.packet.JSGDPacketHandler;
 import dev.tauri.jsgdestiny.common.registry.BlockEntityRegistry;
@@ -46,7 +46,7 @@ public class JSGDestiny implements JSGAddon {
 
         JSGDPacketHandler.init();
 
-        JSG.registerAddon(this);
+        JSGApi.registerAddon(this);
     }
 
     @Override

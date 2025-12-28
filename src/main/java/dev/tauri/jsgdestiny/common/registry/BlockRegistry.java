@@ -1,8 +1,8 @@
 package dev.tauri.jsgdestiny.common.registry;
 
-import dev.tauri.jsg.block.IItemBlock;
-import dev.tauri.jsg.item.ITabbedItem;
-import dev.tauri.jsg.item.JSGBlockItem;
+import dev.tauri.jsg.api.block.util.IItemBlock;
+import dev.tauri.jsg.api.item.ITabbedItem;
+import dev.tauri.jsg.api.item.JSGBlockItem;
 import dev.tauri.jsgdestiny.JSGDestiny;
 import dev.tauri.jsgdestiny.common.block.DestinyBearingBlock;
 import dev.tauri.jsgdestiny.common.block.DestinyFloorChevronBlock;

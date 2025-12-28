@@ -2,8 +2,8 @@ package dev.tauri.jsgdestiny.common.item;
 
 import com.mojang.math.Axis;
 import dev.tauri.jsg.JSG;
+import dev.tauri.jsg.api.client.LoadersHolder;
 import dev.tauri.jsg.item.JSGModelOBJInGUIRenderer;
-import dev.tauri.jsg.loader.LoadersHolder;
 import dev.tauri.jsgdestiny.client.ModelsHolder;
 import dev.tauri.jsgdestiny.client.renderer.DestinyFloorChevronRenderer;
 import dev.tauri.jsgdestiny.common.block.DestinyFloorChevronBlock;
@@ -28,11 +28,11 @@ public class DestinyFloorChevronItem extends DestinyBearingItem {
             stack.scale(1.2f, 1.2f, 1.2f);
 
             LoadersHolder.JSG_HOLDER.texture().getTexture(DestinyFloorChevronRenderer.BASE_TEXTURE).bindTexture();
-            ModelsHolder.DESTINY_CHEVRON.render(stack);
+            ModelsHolder.DESTINY_CHEVRON.render(stack, bufferSource, light, overlay);
 
             var texture = new ResourceLocation(JSG.MOD_ID, DestinyFloorChevronRenderer.BASE_TEXTURE.getPath().replace(".png", "_light.png"));
             LoadersHolder.JSG_HOLDER.texture().getTexture(texture).bindTexture();
-            ModelsHolder.DESTINY_CHEVRON.render(stack, true);
+            ModelsHolder.DESTINY_CHEVRON.render(stack, bufferSource, light, overlay, true);
             stack.popPose();
         };
     }

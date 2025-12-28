@@ -1,24 +1,24 @@
 package dev.tauri.jsgdestiny.common.blockentity;
 
 import dev.tauri.jsg.JSG;
-import dev.tauri.jsg.api.stargate_listener.IStargateListener;
-import dev.tauri.jsg.block.stargate.IStargateChevronBlock;
+import dev.tauri.jsg.api.block.stargate.IStargateChevronBlock;
+import dev.tauri.jsg.api.registry.ScheduledTaskType;
+import dev.tauri.jsg.api.stargate.Stargate;
+import dev.tauri.jsg.api.stargate.listener.IStargateListener;
+import dev.tauri.jsg.api.stargate.network.address.symbol.SymbolInterface;
+import dev.tauri.jsg.api.stargate.result.StargateOpenResult;
+import dev.tauri.jsg.api.state.State;
+import dev.tauri.jsg.api.state.StateType;
+import dev.tauri.jsg.api.util.ScheduledTask;
+import dev.tauri.jsg.api.util.blockentity.ITickable;
+import dev.tauri.jsg.api.util.blockentity.ScheduledTaskExecutorInterface;
 import dev.tauri.jsg.blockentity.stargate.StargateAbstractBaseBE;
 import dev.tauri.jsg.blockentity.stargate.StargateAbstractMemberBE;
-import dev.tauri.jsg.blockentity.util.ScheduledTask;
-import dev.tauri.jsg.blockentity.util.ScheduledTaskExecutorInterface;
 import dev.tauri.jsg.packet.JSGPacketHandler;
 import dev.tauri.jsg.packet.packets.StateUpdatePacketToClient;
 import dev.tauri.jsg.packet.packets.StateUpdateRequestToServer;
-import dev.tauri.jsg.registry.TagsRegistry;
-import dev.tauri.jsg.stargate.ScheduledTaskType;
-import dev.tauri.jsg.stargate.Stargate;
-import dev.tauri.jsg.stargate.network.SymbolInterface;
-import dev.tauri.jsg.stargate.result.StargateOpenResult;
-import dev.tauri.jsg.state.State;
+import dev.tauri.jsg.registry.tags.JSGBlockTags;
 import dev.tauri.jsg.state.StateProviderInterface;
-import dev.tauri.jsg.state.StateTypeEnum;
-import dev.tauri.jsg.util.ITickable;
 import dev.tauri.jsgdestiny.JSGDestiny;
 import dev.tauri.jsgdestiny.common.expansion.ScheduledTasksRegistry;
 import dev.tauri.jsgdestiny.common.registry.BlockEntityRegistry;
@@ -141,7 +141,7 @@ public class DestinyBearingBE extends BlockEntity implements ITickable, StatePro
     public final DestinyBearingRendererState rendererState = new DestinyBearingRendererState();
 
     @Override
-    public State getState(StateTypeEnum stateTypeEnum) {
+    public State getState(StateType stateTypeEnum) {
         if (stateTypeEnum == DestinyBearingRendererState.STATE_TYPE) {
             rendererState.active = isActive;
             return rendererState;
@@ -150,14 +150,14 @@ public class DestinyBearingBE extends BlockEntity implements ITickable, StatePro
     }
 
     @Override
-    public State createState(StateTypeEnum stateTypeEnum) {
+    public State createState(StateType stateTypeEnum) {
         if (stateTypeEnum == DestinyBearingRendererState.STATE_TYPE)
             return new DestinyBearingRendererState();
         return null;
     }
 
     @Override
-    public void setState(StateTypeEnum stateTypeEnum, State state) {
+    public void setState(StateType stateTypeEnum, State state) {
         if (stateTypeEnum == DestinyBearingRendererState.STATE_TYPE) {
             rendererState.active = ((DestinyBearingRendererState) state).active;
             setChanged();
@@ -167,7 +167,7 @@ public class DestinyBearingBE extends BlockEntity implements ITickable, StatePro
     protected PacketDistributor.TargetPoint targetPoint;
 
     @Override
-    public void sendState(StateTypeEnum type, State state) {
+    public void sendState(StateType type, State state) {
         if (getLevel() == null || getLevel().isClientSide) return;
 
         if (targetPoint != null) {
@@ -186,7 +186,7 @@ public class DestinyBearingBE extends BlockEntity implements ITickable, StatePro
     }
 
     @Nullable
-    protected Stargate<?, ?> getLinkableStargate() {
+    protected Stargate<?> getLinkableStargate() {
         if (getLevel() == null) return null;
         var belowBlock = getLevel().getBlockState(getBlockPos().below()).getBlock();
         if (!(belowBlock instanceof IStargateChevronBlock)) return null;
@@ -207,7 +207,7 @@ public class DestinyBearingBE extends BlockEntity implements ITickable, StatePro
             }
         } else {
             var gState = getLevel().getBlockState(gateBasePos);
-            if (!gState.is(TagsRegistry.ALL_STARGATE_BASES) || !(getLevel().getBlockEntity(gateBasePos) instanceof StargateAbstractBaseBE)) {
+            if (!gState.is(JSGBlockTags.ALL_STARGATE_BASES) || !(getLevel().getBlockEntity(gateBasePos) instanceof StargateAbstractBaseBE)) {
                 gateBasePos = null;
                 setChanged();
                 JSGDestiny.logger.info("removed from listeners");
