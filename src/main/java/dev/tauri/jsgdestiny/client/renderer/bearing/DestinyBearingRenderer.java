@@ -7,7 +7,7 @@ import dev.tauri.jsg.api.blockstates.JSGProperties;
 import dev.tauri.jsg.api.config.JSGConfig;
 import dev.tauri.jsg.helpers.BlockPosHelper;
 import dev.tauri.jsg.renderer.activation.Activation;
-import dev.tauri.jsgdestiny.Constants;
+import dev.tauri.jsgdestiny.client.ClientConstants;
 import dev.tauri.jsgdestiny.client.ModelsHolder;
 import dev.tauri.jsgdestiny.client.renderer.activation.BearingActivation;
 import dev.tauri.jsgdestiny.common.blockentity.DestinyBearingBE;
@@ -93,7 +93,7 @@ public class DestinyBearingRenderer implements BlockEntityRenderer<DestinyBearin
         }
         Activation.iterate(rs.activations, blockEntity.getLevel().getGameTime(), partTicks, (ignored, state) -> rs.currentState = state);
 
-        Constants.LOADERS_HOLDER.texture().getTexture(Constants.LOADERS_HOLDER.texture().getTextureResource(rs.currentState >= 0.3f ? TEXTURE_ON : TEXTURE_OFF)).bindTexture();
+        ClientConstants.LOADERS_HOLDER.texture().getTexture(ClientConstants.LOADERS_HOLDER.texture().getTextureResource(rs.currentState >= 0.3f ? TEXTURE_ON : TEXTURE_OFF)).bindTexture();
         ModelsHolder.DESTINY_BEARING_LIGHT.render(stack, pBuffer, light, rs.currentState > 0, rs.currentState > 0 ? rs.currentState + 0.3f : 1f);
         stack.popPose();
     }

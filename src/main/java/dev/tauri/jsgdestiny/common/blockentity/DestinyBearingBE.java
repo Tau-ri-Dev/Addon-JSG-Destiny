@@ -200,7 +200,7 @@ public class DestinyBearingBE extends BlockEntity implements ITickable, StatePro
         if (gateBasePos == null) {
             var base = getLinkableStargate();
             if (base != null) {
-                gateBasePos = base.getBlockPos();
+                gateBasePos = base.blockPosition();
                 setChanged();
                 base.getListenerHandler().addListener(this);
                 JSGDestiny.logger.info("added to listeners");

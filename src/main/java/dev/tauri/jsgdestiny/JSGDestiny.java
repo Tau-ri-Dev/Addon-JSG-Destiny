@@ -3,6 +3,7 @@ package dev.tauri.jsgdestiny;
 import dev.tauri.jsg.api.JSGAddon;
 import dev.tauri.jsg.api.JSGApi;
 import dev.tauri.jsg.api.LoggerWrapper;
+import dev.tauri.jsgdestiny.client.ClientConstants;
 import dev.tauri.jsgdestiny.common.expansion.ScheduledTasksRegistry;
 import dev.tauri.jsgdestiny.common.packet.JSGDPacketHandler;
 import dev.tauri.jsgdestiny.common.registry.BlockEntityRegistry;
@@ -35,7 +36,6 @@ public class JSGDestiny implements JSGAddon {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         MinecraftForge.EVENT_BUS.register(this);
-        Constants.load();
 
         ItemRegistry.register(modEventBus);
         BlockRegistry.register(modEventBus);
@@ -62,5 +62,10 @@ public class JSGDestiny implements JSGAddon {
     @Override
     public String getVersion() {
         return MOD_VERSION;
+    }
+
+    @Override
+    public void onJSGLoad() {
+        ClientConstants.load();
     }
 }
