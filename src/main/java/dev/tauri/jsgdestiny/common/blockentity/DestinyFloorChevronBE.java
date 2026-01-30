@@ -3,7 +3,6 @@ package dev.tauri.jsgdestiny.common.blockentity;
 import dev.tauri.jsg.api.config.JSGConfig;
 import dev.tauri.jsg.api.stargate.Stargate;
 import dev.tauri.jsg.api.stargate.network.address.symbol.SymbolInterface;
-import dev.tauri.jsg.blockentity.stargate.StargateAbstractBaseBE;
 import dev.tauri.jsg.helpers.LinkingHelper;
 import dev.tauri.jsg.registry.tags.JSGBlockTags;
 import dev.tauri.jsgdestiny.common.registry.BlockEntityRegistry;
@@ -18,7 +17,7 @@ public class DestinyFloorChevronBE extends DestinyBearingBE {
     @Override
     public Stargate<?> getLinkableStargate() {
         if (getLevel() == null) return null;
-        return LinkingHelper.findClosestTile(getLevel(), getBlockPos(), JSGBlockTags.ALL_STARGATE_BASES, StargateAbstractBaseBE.class, JSGConfig.DialHomeDevice.rangeFlat.get(), JSGConfig.DialHomeDevice.rangeVertical.get());
+        return LinkingHelper.findClosestTile(getLevel(), getBlockPos(), JSGBlockTags.ALL_STARGATE_BASES, Stargate.class, JSGConfig.DialHomeDevice.rangeFlat.get(), JSGConfig.DialHomeDevice.rangeVertical.get());
     }
 
     @Override

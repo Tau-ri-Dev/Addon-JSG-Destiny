@@ -12,7 +12,6 @@ import dev.tauri.jsg.api.state.StateType;
 import dev.tauri.jsg.api.util.ScheduledTask;
 import dev.tauri.jsg.api.util.blockentity.ITickable;
 import dev.tauri.jsg.api.util.blockentity.ScheduledTaskExecutorInterface;
-import dev.tauri.jsg.blockentity.stargate.StargateAbstractBaseBE;
 import dev.tauri.jsg.blockentity.stargate.StargateAbstractMemberBE;
 import dev.tauri.jsg.packet.JSGPacketHandler;
 import dev.tauri.jsg.packet.packets.StateUpdatePacketToClient;
@@ -207,7 +206,7 @@ public class DestinyBearingBE extends BlockEntity implements ITickable, StatePro
             }
         } else {
             var gState = getLevel().getBlockState(gateBasePos);
-            if (!gState.is(JSGBlockTags.ALL_STARGATE_BASES) || !(getLevel().getBlockEntity(gateBasePos) instanceof StargateAbstractBaseBE)) {
+            if (!gState.is(JSGBlockTags.ALL_STARGATE_BASES) || !(getLevel().getBlockEntity(gateBasePos) instanceof Stargate<?>)) {
                 gateBasePos = null;
                 setChanged();
                 JSGDestiny.logger.info("removed from listeners");
