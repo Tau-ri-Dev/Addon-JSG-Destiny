@@ -1,8 +1,8 @@
 package dev.tauri.jsgdestiny.client;
 
-import dev.tauri.jsg.api.client.IModelsHolder;
-import dev.tauri.jsg.api.client.LoadersHolder;
-import dev.tauri.jsg.api.registry.BiomeOverlayRegistry;
+import dev.tauri.jsg.core.client.IModelsHolder;
+import dev.tauri.jsg.core.client.LoadersHolder;
+import dev.tauri.jsg.core.common.entity.BiomeOverlayInstance;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
@@ -15,12 +15,11 @@ public enum ModelsHolder implements IModelsHolder {
     DESTINY_BEARING_BODY("bearing/bearing_body.obj", "bearing/bearing_body.png", false),
     DESTINY_BEARING_LIGHT("bearing/bearing_light.obj", "bearing/bearing_light_on.png", false),
 
-    DESTINY_CHEVRON("floor_chevron.obj", "", false)
-    ;
+    DESTINY_CHEVRON("floor_chevron.obj", "", false);
 
     public final ResourceLocation model;
-    public final Map<BiomeOverlayRegistry.BiomeOverlayInstance, ResourceLocation> biomeTextureResourceMap = new HashMap<>();
-    private final List<BiomeOverlayRegistry.BiomeOverlayInstance> nonExistingReported = new ArrayList<>();
+    public final Map<BiomeOverlayInstance, ResourceLocation> biomeTextureResourceMap = new HashMap<>();
+    private final List<BiomeOverlayInstance> nonExistingReported = new ArrayList<>();
 
     ModelsHolder(String modelPath, String texturePath, boolean byOverlay) {
         this.model = ClientConstants.LOADERS_HOLDER.model().getModelResource(modelPath);
@@ -38,12 +37,12 @@ public enum ModelsHolder implements IModelsHolder {
     }
 
     @Override
-    public @NotNull Map<BiomeOverlayRegistry.BiomeOverlayInstance, ResourceLocation> getBiomeTextureResourceMap() {
+    public @NotNull Map<BiomeOverlayInstance, ResourceLocation> getBiomeTextureResourceMap() {
         return biomeTextureResourceMap;
     }
 
     @Override
-    public @NotNull List<BiomeOverlayRegistry.BiomeOverlayInstance> getNonExistingTexturesReported() {
+    public @NotNull List<BiomeOverlayInstance> getNonExistingTexturesReported() {
         return nonExistingReported;
     }
 }

@@ -1,18 +1,19 @@
 package dev.tauri.jsgdestiny.common.block;
 
-import dev.tauri.jsg.api.block.util.IHighlightBlock;
-import dev.tauri.jsg.api.block.util.IItemBlock;
-import dev.tauri.jsg.api.block.util.WrenchRotatable;
-import dev.tauri.jsg.api.blockstates.JSGProperties;
-import dev.tauri.jsg.api.item.ITabbedItem;
-import dev.tauri.jsg.api.item.JSGBlockItem;
 import dev.tauri.jsg.api.stargate.Stargate;
-import dev.tauri.jsg.block.TickableBEBlock;
-import dev.tauri.jsg.helpers.BlockPosHelper;
-import dev.tauri.jsg.helpers.ItemHelper;
+import dev.tauri.jsg.core.common.block.TickableBEBlock;
+import dev.tauri.jsg.core.common.block.util.IHighlightBlock;
+import dev.tauri.jsg.core.common.block.util.IItemBlock;
+import dev.tauri.jsg.core.common.block.util.WrenchRotatable;
+import dev.tauri.jsg.core.common.blockstate.JSGProperties;
+import dev.tauri.jsg.core.common.helper.BlockPosHelper;
+import dev.tauri.jsg.core.common.helper.ItemHelper;
+import dev.tauri.jsg.core.common.item.ITabbedItem;
+import dev.tauri.jsg.core.common.item.JSGBlockItem;
+import dev.tauri.jsg.core.common.registry.CoreTabs;
 import dev.tauri.jsgdestiny.common.blockentity.DestinyBearingBE;
 import dev.tauri.jsgdestiny.common.item.DestinyBearingItem;
-import dev.tauri.jsgdestiny.common.registry.TabRegistry;
+import dev.tauri.jsgdestiny.common.registry.JSGDestinyTabs;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -137,7 +138,9 @@ public class DestinyBearingBlock extends TickableBEBlock implements IHighlightBl
 
     @Override
     public List<RegistryObject<CreativeModeTab>> getTabs() {
-        return List.of(TabRegistry.TAB_DESTINY, dev.tauri.jsg.registry.TabRegistry.TAB_TRANSPORTATION);
+        if (CoreTabs.TAB_TRANSPORTATION.get() != null)
+            return List.of(JSGDestinyTabs.TAB_DESTINY, CoreTabs.TAB_TRANSPORTATION.get());
+        return List.of(JSGDestinyTabs.TAB_DESTINY);
     }
 
     @Override

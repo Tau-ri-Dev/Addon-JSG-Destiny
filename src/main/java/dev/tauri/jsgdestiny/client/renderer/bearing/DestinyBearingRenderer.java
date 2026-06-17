@@ -3,10 +3,9 @@ package dev.tauri.jsgdestiny.client.renderer.bearing;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import dev.tauri.jsg.api.blockstates.JSGProperties;
-import dev.tauri.jsg.api.config.JSGConfig;
-import dev.tauri.jsg.helpers.BlockPosHelper;
-import dev.tauri.jsg.renderer.activation.Activation;
+import dev.tauri.jsg.core.client.renderer.Activation;
+import dev.tauri.jsg.core.common.blockstate.JSGProperties;
+import dev.tauri.jsg.core.common.helper.BlockPosHelper;
 import dev.tauri.jsgdestiny.client.ClientConstants;
 import dev.tauri.jsgdestiny.client.ModelsHolder;
 import dev.tauri.jsgdestiny.client.renderer.activation.BearingActivation;
@@ -68,20 +67,8 @@ public class DestinyBearingRenderer implements BlockEntityRenderer<DestinyBearin
         stack.translate(0.5, 0.5, 0.5);
         stack.mulPose(Axis.YP.rotationDegrees(getRotation(blockEntity)));
         var y = DestinyBearingHeightAdjust.getY(blockEntity);
-        switch (JSGConfig.Stargate.stargateSize.get()) {
-            case SMALL:
-                stack.translate(0, y, 0);
-                stack.scale(3.2f, 3.2f, 3.2f);
-                break;
-            case LARGE:
-                stack.translate(0, y, 0);
-                stack.scale(5.2f, 5.2f, 5.2f);
-                break;
-            default:
-                stack.translate(0, y, 0);
-                stack.scale(4.2f, 4.2f, 4.2f);
-                break;
-        }
+        stack.translate(0, y, 0);
+        stack.scale(4.2f, 4.2f, 4.2f);
 
         RenderSystem.clearColor(1, 1, 1, 1);
         ModelsHolder.DESTINY_BEARING_BODY.bindTexture().render(stack, pBuffer, light, overlay);

@@ -1,6 +1,6 @@
 package dev.tauri.jsgdestiny.client;
 
-import dev.tauri.jsg.api.client.LoadersHolder;
+import dev.tauri.jsg.core.client.LoadersHolder;
 import dev.tauri.jsgdestiny.JSGDestiny;
 
 public class ClientConstants {

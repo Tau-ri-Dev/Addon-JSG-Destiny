@@ -1,19 +1,13 @@
 package dev.tauri.jsgdestiny.common.state;
 
-import dev.tauri.jsg.api.state.State;
-import dev.tauri.jsg.api.state.StateType;
-import dev.tauri.jsg.renderer.activation.Activation;
-import dev.tauri.jsgdestiny.JSGDestiny;
+import dev.tauri.jsg.core.client.renderer.Activation;
+import dev.tauri.jsg.core.common.entity.State;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.resources.ResourceLocation;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DestinyBearingRendererState extends State {
-
-    public static final StateType STATE_TYPE = StateType.create(new ResourceLocation(JSGDestiny.MOD_ID, "bearing_state"));
-
     public final List<Activation<Object>> activations = new ArrayList<>();
     public boolean lastActiveState = false;
     public float currentState = 0;

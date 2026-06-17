@@ -1,17 +1,12 @@
 package dev.tauri.jsgdestiny;
 
-import dev.tauri.jsg.api.JSGAddon;
-import dev.tauri.jsg.api.JSGApi;
-import dev.tauri.jsg.api.LoggerWrapper;
+import dev.tauri.jsg.core.JSGAddon;
+import dev.tauri.jsg.core.JSGAddons;
+import dev.tauri.jsg.core.LoggerWrapper;
+import dev.tauri.jsg.core.common.registry.helper.RegistryHelper;
 import dev.tauri.jsgdestiny.client.ClientConstants;
-import dev.tauri.jsgdestiny.common.expansion.ScheduledTasksRegistry;
-import dev.tauri.jsgdestiny.common.packet.JSGDPacketHandler;
-import dev.tauri.jsgdestiny.common.registry.BlockEntityRegistry;
-import dev.tauri.jsgdestiny.common.registry.BlockRegistry;
-import dev.tauri.jsgdestiny.common.registry.ItemRegistry;
-import dev.tauri.jsgdestiny.common.registry.TabRegistry;
+import dev.tauri.jsgdestiny.common.registry.JSGDestinyRegistriesInit;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -27,26 +22,24 @@ public class JSGDestiny implements JSGAddon {
     public static String MOD_VERSION = "";
     public static final String MC_VERSION = "1.20.1";
 
+    public static final RegistryHelper REGISTRY_HELPER = new RegistryHelper(JSGDestiny.MOD_ID);
+
     public JSGDestiny() {
         logger = new LoggerWrapper("[jsg destiny] ", LoggerFactory.getLogger(MOD_NAME));
 
         ModList.get().getModContainerById(MOD_ID).ifPresentOrElse(container -> MOD_VERSION = MC_VERSION + "-" + container.getModInfo().getVersion().getQualifier(), () -> {
         });
-        JSGDestiny.logger.info("Loading JSG:Destiny Addon version {}", JSGDestiny.MOD_VERSION);
-        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        JSGDestiny.logger.info("Loading {} version {}", JSGDestiny.MOD_NAME, JSGDestiny.MOD_VERSION);
+
+        var eventBus = FMLJavaModLoadingContext.get().getModEventBus();
+
+        JSGDestinyRegistriesInit.init();
+
+        JSGDestinyRegistriesInit.register(eventBus);
 
         MinecraftForge.EVENT_BUS.register(this);
 
-        ItemRegistry.register(modEventBus);
-        BlockRegistry.register(modEventBus);
-        TabRegistry.register(modEventBus);
-        BlockEntityRegistry.register(modEventBus);
-
-        ScheduledTasksRegistry.load();
-
-        JSGDPacketHandler.init();
-
-        JSGApi.registerAddon(this);
+        JSGAddons.registerAddon(this);
     }
 
     @Override
@@ -65,7 +58,7 @@ public class JSGDestiny implements JSGAddon {
     }
 
     @Override
-    public void onJSGLoad() {
+    public void onJSGCoreLoad() {
         ClientConstants.load();
     }
 }

@@ -1,9 +1,6 @@
 {
-  "loader": "jsg:handheld_item_model",
-  "parent": "item/generated",
-  "textures": {
-    "layer0": "jsg:block/wip"
-  },
+  "loader": "jsg_core:handheld_item_model",
+  "override_transformations": true,
   "custom_render_types": [
     "THIRD_PERSON_LEFT_HAND",
     "THIRD_PERSON_RIGHT_HAND",
@@ -13,5 +10,9 @@
     "GROUND",
     "FIXED",
     "GUI"
-  ]
+  ],
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "jsg_core:block/wip"
+  }
 }

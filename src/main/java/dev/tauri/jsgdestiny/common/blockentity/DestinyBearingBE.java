@@ -1,26 +1,23 @@
 package dev.tauri.jsgdestiny.common.blockentity;
 
-import dev.tauri.jsg.JSG;
 import dev.tauri.jsg.api.block.stargate.IStargateChevronBlock;
-import dev.tauri.jsg.api.registry.ScheduledTaskType;
 import dev.tauri.jsg.api.stargate.Stargate;
 import dev.tauri.jsg.api.stargate.listener.IStargateListener;
-import dev.tauri.jsg.api.stargate.network.address.symbol.SymbolInterface;
 import dev.tauri.jsg.api.stargate.result.StargateOpenResult;
-import dev.tauri.jsg.api.state.State;
-import dev.tauri.jsg.api.state.StateType;
-import dev.tauri.jsg.api.util.ScheduledTask;
-import dev.tauri.jsg.api.util.blockentity.ITickable;
-import dev.tauri.jsg.api.util.blockentity.ScheduledTaskExecutorInterface;
-import dev.tauri.jsg.blockentity.stargate.StargateAbstractMemberBE;
-import dev.tauri.jsg.packet.JSGPacketHandler;
-import dev.tauri.jsg.packet.packets.StateUpdatePacketToClient;
-import dev.tauri.jsg.packet.packets.StateUpdateRequestToServer;
-import dev.tauri.jsg.registry.tags.JSGBlockTags;
-import dev.tauri.jsg.state.StateProviderInterface;
+import dev.tauri.jsg.common.blockentity.stargate.StargateAbstractMemberBE;
+import dev.tauri.jsg.common.registry.tags.JSGBlockTags;
+import dev.tauri.jsg.core.common.blockentity.BEStateProvider;
+import dev.tauri.jsg.core.common.blockentity.ITickable;
+import dev.tauri.jsg.core.common.blockentity.ScheduledTaskExecutorInterface;
+import dev.tauri.jsg.core.common.entity.ScheduledTask;
+import dev.tauri.jsg.core.common.entity.ScheduledTaskType;
+import dev.tauri.jsg.core.common.entity.State;
+import dev.tauri.jsg.core.common.entity.StateType;
+import dev.tauri.jsg.core.common.registry.CoreStateTypes;
+import dev.tauri.jsg.core.common.symbol.SymbolInterface;
 import dev.tauri.jsgdestiny.JSGDestiny;
-import dev.tauri.jsgdestiny.common.expansion.ScheduledTasksRegistry;
-import dev.tauri.jsgdestiny.common.registry.BlockEntityRegistry;
+import dev.tauri.jsgdestiny.common.registry.JSGDestinyBlockEntities;
+import dev.tauri.jsgdestiny.common.registry.JSGDestinyScheduledTasks;
 import dev.tauri.jsgdestiny.common.state.DestinyBearingRendererState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -35,9 +32,9 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DestinyBearingBE extends BlockEntity implements ITickable, StateProviderInterface, ScheduledTaskExecutorInterface, IStargateListener {
+public class DestinyBearingBE extends BlockEntity implements ITickable, BEStateProvider, ScheduledTaskExecutorInterface, IStargateListener {
     public DestinyBearingBE(BlockPos pPos, BlockState pBlockState) {
-        super(BlockEntityRegistry.DESTINY_BEARING.get(), pPos, pBlockState);
+        super(JSGDestinyBlockEntities.DESTINY_BEARING.get(), pPos, pBlockState);
     }
 
     public DestinyBearingBE(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState) {
@@ -92,11 +89,11 @@ public class DestinyBearingBE extends BlockEntity implements ITickable, StatePro
             removeTask(lastDeactivationTask);
         lastDeactivationTask = null;
         if (time > 0) {
-            lastDeactivationTask = new ScheduledTask(ScheduledTasksRegistry.DESTINY_BEARING_RENDER_UPDATE, time);
+            lastDeactivationTask = new ScheduledTask(JSGDestinyScheduledTasks.DESTINY_BEARING_RENDER_UPDATE, time);
             addTask(lastDeactivationTask);
         }
         setChanged();
-        getAndSendState(DestinyBearingRendererState.STATE_TYPE);
+        getAndSendState(CoreStateTypes.RENDERER_STATE.get());
     }
 
     public void deactivate() {
@@ -104,7 +101,7 @@ public class DestinyBearingBE extends BlockEntity implements ITickable, StatePro
         lastDeactivationTask = null;
         this.isActive = false;
         setChanged();
-        getAndSendState(DestinyBearingRendererState.STATE_TYPE);
+        getAndSendState(CoreStateTypes.RENDERER_STATE.get());
     }
 
     // ------------------------------------------------------------------------
@@ -132,7 +129,7 @@ public class DestinyBearingBE extends BlockEntity implements ITickable, StatePro
 
     @Override
     public void executeTask(ScheduledTaskType enumScheduledTask, @Nullable CompoundTag compoundTag) {
-        if (enumScheduledTask == ScheduledTasksRegistry.DESTINY_BEARING_RENDER_UPDATE) {
+        if (enumScheduledTask == JSGDestinyScheduledTasks.DESTINY_BEARING_RENDER_UPDATE.get()) {
             deactivate();
         }
     }
@@ -141,7 +138,7 @@ public class DestinyBearingBE extends BlockEntity implements ITickable, StatePro
 
     @Override
     public State getState(StateType stateTypeEnum) {
-        if (stateTypeEnum == DestinyBearingRendererState.STATE_TYPE) {
+        if (stateTypeEnum == CoreStateTypes.RENDERER_STATE.get()) {
             rendererState.active = isActive;
             return rendererState;
         }
@@ -150,39 +147,20 @@ public class DestinyBearingBE extends BlockEntity implements ITickable, StatePro
 
     @Override
     public State createState(StateType stateTypeEnum) {
-        if (stateTypeEnum == DestinyBearingRendererState.STATE_TYPE)
+        if (stateTypeEnum == CoreStateTypes.RENDERER_STATE.get())
             return new DestinyBearingRendererState();
         return null;
     }
 
     @Override
     public void setState(StateType stateTypeEnum, State state) {
-        if (stateTypeEnum == DestinyBearingRendererState.STATE_TYPE) {
+        if (stateTypeEnum == CoreStateTypes.RENDERER_STATE.get()) {
             rendererState.active = ((DestinyBearingRendererState) state).active;
             setChanged();
         }
     }
 
     protected PacketDistributor.TargetPoint targetPoint;
-
-    @Override
-    public void sendState(StateType type, State state) {
-        if (getLevel() == null || getLevel().isClientSide) return;
-
-        if (targetPoint != null) {
-            JSGPacketHandler.sendToClient(new StateUpdatePacketToClient(getBlockPos(), type, state), targetPoint);
-        } else {
-            JSG.logger.debug("targetPoint was null trying to send {} from {}", type, this.getClass().getCanonicalName());
-        }
-    }
-
-    @Override
-    public void onLoad() {
-        if (getLevel() != null && !getLevel().isClientSide) {
-            var pos = getBlockPos();
-            targetPoint = new PacketDistributor.TargetPoint(pos.getX(), pos.getY(), pos.getZ(), 512, getLevel().dimension());
-        }
-    }
 
     @Nullable
     protected Stargate<?> getLinkableStargate() {
@@ -226,7 +204,7 @@ public class DestinyBearingBE extends BlockEntity implements ITickable, StatePro
             }
             updateLink();
         } else {
-            JSGPacketHandler.sendToServer(new StateUpdateRequestToServer(getBlockPos(), DestinyBearingRendererState.STATE_TYPE));
+            requestState(CoreStateTypes.RENDERER_STATE.get());
         }
     }
 
@@ -244,5 +222,15 @@ public class DestinyBearingBE extends BlockEntity implements ITickable, StatePro
         isActive = compound.getBoolean("isActive");
         if (compound.contains("gateBasePos"))
             gateBasePos = BlockPos.of(compound.getLong("gateBasePos"));
+    }
+
+    @Override
+    public PacketDistributor.TargetPoint getTargetPoint() {
+        if (getLevel() == null) return targetPoint;
+        if (targetPoint == null) {
+            var pos = getStateHandlerBlockPos();
+            targetPoint = new PacketDistributor.TargetPoint(pos.getX(), pos.getY(), pos.getZ(), 512, getLevel().dimension());
+        }
+        return targetPoint;
     }
 }

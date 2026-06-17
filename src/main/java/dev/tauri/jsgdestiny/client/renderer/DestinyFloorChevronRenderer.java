@@ -4,12 +4,12 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import dev.tauri.jsg.JSG;
-import dev.tauri.jsg.api.blockstates.JSGProperties;
-import dev.tauri.jsg.api.client.LoadersHolder;
-import dev.tauri.jsg.api.registry.BiomeOverlayRegistry;
-import dev.tauri.jsg.helpers.BlockPosHelper;
-import dev.tauri.jsg.loader.ElementEnum;
-import dev.tauri.jsg.renderer.activation.Activation;
+import dev.tauri.jsg.api.JSGApi;
+import dev.tauri.jsg.common.loader.ElementEnum;
+import dev.tauri.jsg.core.client.renderer.Activation;
+import dev.tauri.jsg.core.common.blockstate.JSGProperties;
+import dev.tauri.jsg.core.common.helper.BlockPosHelper;
+import dev.tauri.jsg.core.common.registry.CoreBiomeOverlays;
 import dev.tauri.jsgdestiny.client.ModelsHolder;
 import dev.tauri.jsgdestiny.client.renderer.activation.BearingActivation;
 import dev.tauri.jsgdestiny.common.blockentity.DestinyBearingBE;
@@ -36,7 +36,7 @@ public class DestinyFloorChevronRenderer implements BlockEntityRenderer<DestinyF
         return 64 * 3;
     }
 
-    public static final ResourceLocation BASE_TEXTURE = ElementEnum.UNIVERSE_CHEVRON.biomeTextureResourceMap.get(BiomeOverlayRegistry.NORMAL);
+    public static final ResourceLocation BASE_TEXTURE = ElementEnum.UNIVERSE_CHEVRON.biomeTextureResourceMap.get(CoreBiomeOverlays.NORMAL.get());
 
     @Override
     @ParametersAreNonnullByDefault
@@ -51,7 +51,7 @@ public class DestinyFloorChevronRenderer implements BlockEntityRenderer<DestinyF
         stack.mulPose(Axis.YP.rotationDegrees(getRotation(blockEntity)));
 
         RenderSystem.clearColor(1, 1, 1, 1);
-        LoadersHolder.JSG_HOLDER.texture().getTexture(BASE_TEXTURE).bindTexture();
+        JSGApi.JSG_LOADERS_HOLDER.texture().getTexture(BASE_TEXTURE).bindTexture();
         ModelsHolder.DESTINY_CHEVRON.render(stack, buffer, light, overlay);
 
         var active = rs.active;
@@ -61,8 +61,8 @@ public class DestinyFloorChevronRenderer implements BlockEntityRenderer<DestinyF
         }
         Activation.iterate(rs.activations, blockEntity.getLevel().getGameTime(), partialTicks, (ignored, state) -> rs.currentState = state);
 
-        var texture = new ResourceLocation(JSG.MOD_ID, BASE_TEXTURE.getPath().replace(".png", "_light" + (rs.currentState >= 0.3f ? "" : "_off") + ".png"));
-        LoadersHolder.JSG_HOLDER.texture().getTexture(texture).bindTexture();
+        var texture = new ResourceLocation(JSG.MOD_ID, BASE_TEXTURE.getPath().split("\\.")[0] + "_light" + (rs.currentState >= 0.3f ? "" : "_off"));
+        JSGApi.JSG_LOADERS_HOLDER.texture().getTexture(texture).bindTexture();
         ModelsHolder.DESTINY_CHEVRON.render(stack, buffer, light, rs.currentState > 0, rs.currentState > 0 ? rs.currentState + 0.3f : 1f);
 
         stack.popPose();
