@@ -10,14 +10,16 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import org.slf4j.Logger;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.LoggerFactory;
+
+import java.util.Optional;
 
 @Mod(JSGDestiny.MOD_ID)
 public class JSGDestiny implements JSGAddon {
     public static final String MOD_ID = "jsg_destiny";
     public static final String MOD_NAME = "JSG: Destiny Addon";
-    public static Logger logger;
+    public static LoggerWrapper logger;
 
     public static String MOD_VERSION = "";
     public static final String MC_VERSION = "1.20.1";
@@ -43,18 +45,27 @@ public class JSGDestiny implements JSGAddon {
     }
 
     @Override
-    public String getName() {
-        return MOD_NAME;
-    }
-
-    @Override
+    @NotNull
     public String getId() {
         return MOD_ID;
     }
 
     @Override
-    public String getVersion() {
-        return MOD_VERSION;
+    @NotNull
+    public Optional<LoggerWrapper> getLoggerWrapper() {
+        return Optional.of(logger);
+    }
+
+    @Override
+    public String @NotNull [] getWelcomeLogo() {
+        return new String[]{
+                "░░░░░██╗░██████╗░██████╗░██╗██████╗░███████╗░██████╗████████╗██╗███╗░░██╗██╗░░░██╗",
+                "░░░░░██║██╔════╝██╔════╝░╚═╝██╔══██╗██╔════╝██╔════╝╚══██╔══╝██║████╗░██║╚██╗░██╔╝",
+                "░░░░░██║╚█████╗░██║░░██╗░░░░██║░░██║█████╗░░╚█████╗░░░░██║░░░██║██╔██╗██║░╚████╔╝░",
+                "██╗░░██║░╚═══██╗██║░░╚██╗░░░██║░░██║██╔══╝░░░╚═══██╗░░░██║░░░██║██║╚████║░░╚██╔╝░░",
+                "╚█████╔╝██████╔╝╚██████╔╝██╗██████╔╝███████╗██████╔╝░░░██║░░░██║██║░╚███║░░░██║░░░",
+                "░╚════╝░╚═════╝░░╚═════╝░╚═╝╚═════╝░╚══════╝╚═════╝░░░░╚═╝░░░╚═╝╚═╝░░╚══╝░░░╚═╝░░░"
+        };
     }
 
     @Override
