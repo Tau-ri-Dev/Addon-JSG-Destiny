@@ -1,9 +1,9 @@
 package dev.tauri.jsgdestiny;
 
-import dev.tauri.jsg.core.JSGAddon;
-import dev.tauri.jsg.core.JSGAddons;
-import dev.tauri.jsg.core.LoggerWrapper;
-import dev.tauri.jsg.core.common.registry.helper.RegistryHelper;
+import dev.tauri.jsgcore.JSGAddon;
+import dev.tauri.jsgcore.JSGAddons;
+import dev.tauri.jsgcore.LoggerWrapper;
+import dev.tauri.jsgcore.common.registry.helper.RegistryHelper;
 import dev.tauri.jsgdestiny.client.ClientConstants;
 import dev.tauri.jsgdestiny.common.registry.JSGDestinyRegistriesInit;
 import net.minecraftforge.common.MinecraftForge;
@@ -26,14 +26,14 @@ public class JSGDestiny implements JSGAddon {
 
     public static final RegistryHelper REGISTRY_HELPER = new RegistryHelper(JSGDestiny.MOD_ID);
 
-    public JSGDestiny() {
+    public JSGDestiny(FMLJavaModLoadingContext context) {
         logger = new LoggerWrapper("[jsg destiny] ", LoggerFactory.getLogger(MOD_NAME));
 
         ModList.get().getModContainerById(MOD_ID).ifPresentOrElse(container -> MOD_VERSION = MC_VERSION + "-" + container.getModInfo().getVersion().getQualifier(), () -> {
         });
         JSGDestiny.logger.info("Loading {} version {}", JSGDestiny.MOD_NAME, JSGDestiny.MOD_VERSION);
 
-        var eventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        var eventBus = context.getModEventBus();
 
         JSGDestinyRegistriesInit.init();
 

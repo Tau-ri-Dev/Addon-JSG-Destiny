@@ -1,6 +1,6 @@
 package dev.tauri.jsgdestiny.common.item;
 
-import dev.tauri.jsg.core.client.renderer.AbstractItemBEWLR;
+import dev.tauri.jsgcore.client.renderer.AbstractItemBEWLR;
 import dev.tauri.jsgdestiny.client.renderer.item.DestinyFloorChevronBEWLR;
 import dev.tauri.jsgdestiny.common.block.DestinyFloorChevronBlock;
 import net.minecraftforge.api.distmarker.Dist;

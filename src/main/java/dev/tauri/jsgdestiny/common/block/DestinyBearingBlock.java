@@ -1,16 +1,17 @@
 package dev.tauri.jsgdestiny.common.block;
 
 import dev.tauri.jsg.api.stargate.Stargate;
-import dev.tauri.jsg.core.common.block.TickableBEBlock;
-import dev.tauri.jsg.core.common.block.util.IHighlightBlock;
-import dev.tauri.jsg.core.common.block.util.IItemBlock;
-import dev.tauri.jsg.core.common.block.util.WrenchRotatable;
-import dev.tauri.jsg.core.common.blockstate.JSGProperties;
-import dev.tauri.jsg.core.common.helper.BlockPosHelper;
-import dev.tauri.jsg.core.common.helper.ItemHelper;
-import dev.tauri.jsg.core.common.item.ITabbedItem;
-import dev.tauri.jsg.core.common.item.JSGBlockItem;
-import dev.tauri.jsg.core.common.registry.CoreTabs;
+import dev.tauri.jsgcore.common.block.TickableBEBlock;
+import dev.tauri.jsgcore.common.block.util.IHighlightBlock;
+import dev.tauri.jsgcore.common.block.util.IItemBlock;
+import dev.tauri.jsgcore.common.block.util.WrenchRotatable;
+import dev.tauri.jsgcore.common.blockstate.JSGProperties;
+import dev.tauri.jsgcore.common.helper.BlockPosHelper;
+import dev.tauri.jsgcore.common.helper.ItemHelper;
+import dev.tauri.jsgcore.common.item.ITabbedItem;
+import dev.tauri.jsgcore.common.item.JSGBlockItem;
+import dev.tauri.jsgcore.common.registry.CoreTabs;
+import dev.tauri.jsgcore.common.registry.helper.RegistryObjectWrapper;
 import dev.tauri.jsgdestiny.common.blockentity.DestinyBearingBE;
 import dev.tauri.jsgdestiny.common.item.DestinyBearingItem;
 import dev.tauri.jsgdestiny.common.registry.JSGDestinyTabs;
@@ -38,13 +39,13 @@ import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
+import java.util.function.Supplier;
 
 public class DestinyBearingBlock extends TickableBEBlock implements IHighlightBlock, SimpleWaterloggedBlock, ITabbedItem, WrenchRotatable, IItemBlock {
     public DestinyBearingBlock() {
@@ -137,10 +138,10 @@ public class DestinyBearingBlock extends TickableBEBlock implements IHighlightBl
     }
 
     @Override
-    public List<RegistryObject<CreativeModeTab>> getTabs() {
+    public List<Supplier<RegistryObjectWrapper<CreativeModeTab>>> getTabs() {
         if (CoreTabs.TAB_TRANSPORTATION.get() != null)
-            return List.of(JSGDestinyTabs.TAB_DESTINY, CoreTabs.TAB_TRANSPORTATION.get());
-        return List.of(JSGDestinyTabs.TAB_DESTINY);
+            return List.of(() -> JSGDestinyTabs.TAB_DESTINY, CoreTabs.TAB_TRANSPORTATION);
+        return List.of(() -> JSGDestinyTabs.TAB_DESTINY);
     }
 
     @Override

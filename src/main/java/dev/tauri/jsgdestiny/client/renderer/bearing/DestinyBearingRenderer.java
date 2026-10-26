@@ -3,9 +3,9 @@ package dev.tauri.jsgdestiny.client.renderer.bearing;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import dev.tauri.jsg.core.client.renderer.Activation;
-import dev.tauri.jsg.core.common.blockstate.JSGProperties;
-import dev.tauri.jsg.core.common.helper.BlockPosHelper;
+import dev.tauri.jsgcore.client.renderer.Activation;
+import dev.tauri.jsgcore.common.blockstate.JSGProperties;
+import dev.tauri.jsgcore.common.helper.BlockPosHelper;
 import dev.tauri.jsgdestiny.client.ClientConstants;
 import dev.tauri.jsgdestiny.client.ModelsHolder;
 import dev.tauri.jsgdestiny.client.renderer.activation.BearingActivation;
@@ -76,7 +76,7 @@ public class DestinyBearingRenderer implements BlockEntityRenderer<DestinyBearin
         var active = rs.active;
         if (rs.lastActiveState != active) {
             rs.lastActiveState = active;
-            rs.activations.add(new BearingActivation(null, blockEntity.getLevel().getGameTime(), !active));
+            rs.activations.add(new BearingActivation("", blockEntity.getLevel().getGameTime(), !active));
         }
         Activation.iterate(rs.activations, blockEntity.getLevel().getGameTime(), partTicks, (ignored, state) -> rs.currentState = state);
 

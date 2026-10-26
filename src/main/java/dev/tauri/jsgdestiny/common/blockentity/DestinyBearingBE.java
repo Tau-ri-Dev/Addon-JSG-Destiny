@@ -2,19 +2,20 @@ package dev.tauri.jsgdestiny.common.blockentity;
 
 import dev.tauri.jsg.api.block.stargate.IStargateChevronBlock;
 import dev.tauri.jsg.api.stargate.Stargate;
+import dev.tauri.jsg.api.stargate.animation.EnumDialingType;
 import dev.tauri.jsg.api.stargate.listener.IStargateListener;
 import dev.tauri.jsg.api.stargate.result.StargateOpenResult;
 import dev.tauri.jsg.common.blockentity.stargate.StargateAbstractMemberBE;
 import dev.tauri.jsg.common.registry.tags.JSGBlockTags;
-import dev.tauri.jsg.core.common.blockentity.BEStateProvider;
-import dev.tauri.jsg.core.common.blockentity.ITickable;
-import dev.tauri.jsg.core.common.blockentity.ScheduledTaskExecutorInterface;
-import dev.tauri.jsg.core.common.entity.ScheduledTask;
-import dev.tauri.jsg.core.common.entity.ScheduledTaskType;
-import dev.tauri.jsg.core.common.entity.State;
-import dev.tauri.jsg.core.common.entity.StateType;
-import dev.tauri.jsg.core.common.registry.CoreStateTypes;
-import dev.tauri.jsg.core.common.symbol.SymbolInterface;
+import dev.tauri.jsgcore.common.blockentity.BEStateProvider;
+import dev.tauri.jsgcore.common.blockentity.ITickable;
+import dev.tauri.jsgcore.common.blockentity.ScheduledTaskExecutorInterface;
+import dev.tauri.jsgcore.common.entity.ScheduledTask;
+import dev.tauri.jsgcore.common.entity.ScheduledTaskType;
+import dev.tauri.jsgcore.common.entity.State;
+import dev.tauri.jsgcore.common.entity.StateType;
+import dev.tauri.jsgcore.common.registry.CoreStateTypes;
+import dev.tauri.jsgcore.common.symbol.SymbolInterface;
 import dev.tauri.jsgdestiny.JSGDestiny;
 import dev.tauri.jsgdestiny.common.registry.JSGDestinyBlockEntities;
 import dev.tauri.jsgdestiny.common.registry.JSGDestinyScheduledTasks;
@@ -31,6 +32,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class DestinyBearingBE extends BlockEntity implements ITickable, BEStateProvider, ScheduledTaskExecutorInterface, IStargateListener {
     public DestinyBearingBE(BlockPos pPos, BlockState pBlockState) {
@@ -63,7 +65,11 @@ public class DestinyBearingBE extends BlockEntity implements ITickable, BEStateP
 
     @Override
     public void gateSymbolEngage(SymbolInterface symbol) {
-        activate(20);
+        var isFastDialing = getStargate()
+                .flatMap(sg -> sg.getDialingManager().getDialingSequence())
+                .map(ds -> ds.getDialingType() == EnumDialingType.FAST)
+                .orElse(false);
+        activate(isFastDialing ? 0 : 20);
     }
 
     @Override
@@ -172,6 +178,12 @@ public class DestinyBearingBE extends BlockEntity implements ITickable, BEStateP
         return stargateMember.getBaseTile(getLevel());
     }
 
+    public Optional<Stargate<?>> getStargate() {
+        return Optional.ofNullable(gateBasePos)
+                .flatMap(p -> Optional.ofNullable(getLevel()).map(l -> l.getBlockEntity(p)))
+                .flatMap(be -> (be instanceof Stargate<?> sg ? Optional.of(sg) : Optional.empty()));
+    }
+
     protected void updateLink() {
         if (getLevel() == null) return;
         if (gateBasePos == null) {
@@ -180,14 +192,14 @@ public class DestinyBearingBE extends BlockEntity implements ITickable, BEStateP
                 gateBasePos = base.blockPosition();
                 setChanged();
                 base.getListenerHandler().addListener(this);
-                JSGDestiny.logger.info("added to listeners");
+                JSGDestiny.logger.debug("added to listeners");
             }
         } else {
             var gState = getLevel().getBlockState(gateBasePos);
             if (!gState.is(JSGBlockTags.ALL_STARGATE_BASES) || !(getLevel().getBlockEntity(gateBasePos) instanceof Stargate<?>)) {
                 gateBasePos = null;
                 setChanged();
-                JSGDestiny.logger.info("removed from listeners");
+                JSGDestiny.logger.debug("removed from listeners");
             }
         }
     }

@@ -2,7 +2,7 @@ package dev.tauri.jsgdestiny.client.renderer.item;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import dev.tauri.jsg.core.client.renderer.AbstractItemBEWLR;
+import dev.tauri.jsgcore.client.renderer.AbstractItemBEWLR;
 import dev.tauri.jsgdestiny.client.ModelsHolder;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.world.item.ItemDisplayContext;

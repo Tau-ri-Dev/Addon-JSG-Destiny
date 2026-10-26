@@ -1,6 +1,6 @@
 package dev.tauri.jsgdestiny.client.renderer.activation;
 
-import dev.tauri.jsg.core.client.renderer.Activation;
+import dev.tauri.jsgcore.client.renderer.Activation;
 
 public class BearingActivation extends Activation<Object> {
     public BearingActivation(Object textureKey, long stateChange, boolean dim) {

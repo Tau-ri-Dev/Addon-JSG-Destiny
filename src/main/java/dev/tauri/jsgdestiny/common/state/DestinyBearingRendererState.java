@@ -1,7 +1,7 @@
 package dev.tauri.jsgdestiny.common.state;
 
-import dev.tauri.jsg.core.client.renderer.Activation;
-import dev.tauri.jsg.core.common.entity.State;
+import dev.tauri.jsgcore.client.renderer.Activation;
+import dev.tauri.jsgcore.common.entity.State;
 import io.netty.buffer.ByteBuf;
 
 import java.util.ArrayList;

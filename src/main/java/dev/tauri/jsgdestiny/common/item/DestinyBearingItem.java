@@ -1,7 +1,7 @@
 package dev.tauri.jsgdestiny.common.item;
 
-import dev.tauri.jsg.core.client.renderer.AbstractItemBEWLR;
-import dev.tauri.jsg.core.common.item.JSGBlockItem;
+import dev.tauri.jsgcore.client.renderer.AbstractItemBEWLR;
+import dev.tauri.jsgcore.common.item.JSGBlockItem;
 import dev.tauri.jsgdestiny.client.renderer.item.DestinyBearingBEWLR;
 import dev.tauri.jsgdestiny.common.block.DestinyBearingBlock;
 import net.minecraft.network.chat.Component;
