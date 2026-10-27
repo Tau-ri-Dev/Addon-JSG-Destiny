@@ -21,6 +21,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -49,7 +50,7 @@ import java.util.function.Supplier;
 
 public class DestinyBearingBlock extends TickableBEBlock implements IHighlightBlock, SimpleWaterloggedBlock, ITabbedItem, WrenchRotatable, IItemBlock {
     public DestinyBearingBlock() {
-        super(Properties.copy(Blocks.IRON_BLOCK).isViewBlocking((BlockState state, BlockGetter getter, BlockPos pos) -> false).noOcclusion());
+        super(Properties.ofFullCopy(Blocks.IRON_BLOCK).isViewBlocking((BlockState state, BlockGetter getter, BlockPos pos) -> false).noOcclusion());
         this.registerDefaultState(
                 defaultBlockState()
                         .setValue(JSGProperties.FACING_HORIZONTAL_PROPERTY, Direction.NORTH)
@@ -58,7 +59,6 @@ public class DestinyBearingBlock extends TickableBEBlock implements IHighlightBl
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     @ParametersAreNonnullByDefault
     @Nonnull
     public RenderShape getRenderShape(BlockState blockState) {
@@ -68,7 +68,6 @@ public class DestinyBearingBlock extends TickableBEBlock implements IHighlightBl
     @Override
     @ParametersAreNonnullByDefault
     @Nonnull
-    @SuppressWarnings("deprecation")
     public VoxelShape getShape(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos, CollisionContext collisionContext) {
         return Shapes.block();
     }
@@ -81,7 +80,6 @@ public class DestinyBearingBlock extends TickableBEBlock implements IHighlightBl
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     public @NotNull FluidState getFluidState(BlockState blockState) {
         return blockState.getValue(BlockStateProperties.WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(blockState);
     }
@@ -97,21 +95,20 @@ public class DestinyBearingBlock extends TickableBEBlock implements IHighlightBl
 
     @Override
     @ParametersAreNonnullByDefault
-    @SuppressWarnings("deprecation")
     public @NotNull BlockState rotate(BlockState blockState, Rotation rotation) {
         return blockState.setValue(JSGProperties.FACING_HORIZONTAL_PROPERTY, BlockPosHelper.rotateDir(blockState.getValue(JSGProperties.FACING_HORIZONTAL_PROPERTY), rotation));
     }
 
     @Override
     @ParametersAreNonnullByDefault
-    @SuppressWarnings("deprecation")
     public @NotNull BlockState mirror(BlockState blockState, Mirror mirror) {
         return blockState.setValue(JSGProperties.FACING_HORIZONTAL_PROPERTY, BlockPosHelper.flipDir(blockState.getValue(JSGProperties.FACING_HORIZONTAL_PROPERTY), mirror));
     }
 
     @Override
-    public void appendHoverText(@NotNull ItemStack itemStack, @Nullable BlockGetter blockGetter, @NotNull List<Component> components, @NotNull TooltipFlag tooltipFlag) {
-        ItemHelper.applyGenericToolTip(this.getDescriptionId(), components, tooltipFlag);
+    @ParametersAreNonnullByDefault
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+        ItemHelper.applyGenericToolTip(this.getDescriptionId(), tooltipComponents, tooltipFlag);
     }
 
     @Override
@@ -132,8 +129,7 @@ public class DestinyBearingBlock extends TickableBEBlock implements IHighlightBl
 
     @Override
     @ParametersAreNonnullByDefault
-    @SuppressWarnings("deprecation")
-    public boolean isPathfindable(BlockState state, BlockGetter world, BlockPos pos, PathComputationType type) {
+    protected boolean isPathfindable(BlockState state, PathComputationType pathComputationType) {
         return false;
     }
 
@@ -153,16 +149,18 @@ public class DestinyBearingBlock extends TickableBEBlock implements IHighlightBl
 
     @Override
     @ParametersAreNonnullByDefault
-    public void playerWillDestroy(Level level, BlockPos pos, BlockState blockState, Player player) {
-        super.playerWillDestroy(level, pos, blockState, player);
-        if (level.isClientSide) return;
+    @Nonnull
+    public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState blockState, Player player) {
+        var result = super.playerWillDestroy(level, pos, blockState, player);
+        if (level.isClientSide) return result;
         var be = level.getBlockEntity(pos);
-        if (!(be instanceof DestinyBearingBE bearing)) return;
-        if (bearing.gateBasePos == null) return;
+        if (!(be instanceof DestinyBearingBE bearing)) return result;
+        if (bearing.gateBasePos == null) return result;
         var gBE = level.getBlockEntity(bearing.gateBasePos);
-        if (!(gBE instanceof Stargate<?> gate)) return;
+        if (!(gBE instanceof Stargate<?> gate)) return result;
         gate.getListenerHandler().removeListener(bearing);
         bearing.gateBasePos = null;
+        return result;
     }
 
     @Override

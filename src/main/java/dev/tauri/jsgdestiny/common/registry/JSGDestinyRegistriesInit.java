@@ -1,7 +1,7 @@
 package dev.tauri.jsgdestiny.common.registry;
 
 import dev.tauri.jsgdestiny.JSGDestiny;
-import net.minecraftforge.eventbus.api.IEventBus;
+import net.neoforged.bus.api.IEventBus;
 
 public class JSGDestinyRegistriesInit {
     public static void init() {

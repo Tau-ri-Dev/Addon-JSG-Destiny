@@ -5,6 +5,7 @@ import com.mojang.math.Axis;
 import dev.tauri.jsg.JSG;
 import dev.tauri.jsg.api.JSGApi;
 import dev.tauri.jsgcore.client.renderer.AbstractItemBEWLR;
+import dev.tauri.jsgcore.mapping.JSGMapping;
 import dev.tauri.jsgdestiny.client.ModelsHolder;
 import dev.tauri.jsgdestiny.client.renderer.DestinyFloorChevronRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -41,7 +42,7 @@ public class DestinyFloorChevronBEWLR extends AbstractItemBEWLR {
         JSGApi.JSG_LOADERS_HOLDER.texture().getTexture(DestinyFloorChevronRenderer.BASE_TEXTURE).bindTexture();
         ModelsHolder.DESTINY_CHEVRON.render(stack, bufferSource, light, overlay, false, 1f, true);
 
-        var texture = new ResourceLocation(JSG.MOD_ID, DestinyFloorChevronRenderer.BASE_TEXTURE.getPath().split("\\.")[0] + "_light");
+        var texture = JSGMapping.rl(JSG.MOD_ID, DestinyFloorChevronRenderer.BASE_TEXTURE.getPath().split("\\.")[0] + "_light");
         JSGApi.JSG_LOADERS_HOLDER.texture().getTexture(texture).bindTexture();
         ModelsHolder.DESTINY_CHEVRON.render(stack, bufferSource, light, overlay, true, 1f, true);
         stack.popPose();

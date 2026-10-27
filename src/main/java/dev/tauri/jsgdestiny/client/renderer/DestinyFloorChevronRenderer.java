@@ -10,6 +10,7 @@ import dev.tauri.jsgcore.client.renderer.Activation;
 import dev.tauri.jsgcore.common.blockstate.JSGProperties;
 import dev.tauri.jsgcore.common.helper.BlockPosHelper;
 import dev.tauri.jsgcore.common.registry.CoreBiomeOverlays;
+import dev.tauri.jsgcore.mapping.JSGMapping;
 import dev.tauri.jsgdestiny.client.ModelsHolder;
 import dev.tauri.jsgdestiny.client.renderer.activation.BearingActivation;
 import dev.tauri.jsgdestiny.common.blockentity.DestinyBearingBE;
@@ -61,7 +62,7 @@ public class DestinyFloorChevronRenderer implements BlockEntityRenderer<DestinyF
         }
         Activation.iterate(rs.activations, blockEntity.getLevel().getGameTime(), partialTicks, (ignored, state) -> rs.currentState = state);
 
-        var texture = new ResourceLocation(JSG.MOD_ID, BASE_TEXTURE.getPath().split("\\.")[0] + "_light" + (rs.currentState >= 0.3f ? "" : "_off"));
+        var texture = JSGMapping.rl(JSG.MOD_ID, BASE_TEXTURE.getPath().split("\\.")[0] + "_light" + (rs.currentState >= 0.3f ? "" : "_off"));
         JSGApi.JSG_LOADERS_HOLDER.texture().getTexture(texture).bindTexture();
         ModelsHolder.DESTINY_CHEVRON.render(stack, buffer, light, rs.currentState > 0, rs.currentState > 0 ? rs.currentState + 0.3f : 1f);
 

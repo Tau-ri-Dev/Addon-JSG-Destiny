@@ -9,11 +9,13 @@ import dev.tauri.jsg.common.blockentity.stargate.StargateAbstractMemberBE;
 import dev.tauri.jsg.common.registry.tags.JSGBlockTags;
 import dev.tauri.jsgcore.common.blockentity.BEStateProvider;
 import dev.tauri.jsgcore.common.blockentity.ITickable;
+import dev.tauri.jsgcore.common.blockentity.JSGBlockEntity;
 import dev.tauri.jsgcore.common.blockentity.ScheduledTaskExecutorInterface;
 import dev.tauri.jsgcore.common.entity.ScheduledTask;
 import dev.tauri.jsgcore.common.entity.ScheduledTaskType;
 import dev.tauri.jsgcore.common.entity.State;
 import dev.tauri.jsgcore.common.entity.StateType;
+import dev.tauri.jsgcore.common.packet.TargetPoint;
 import dev.tauri.jsgcore.common.registry.CoreStateTypes;
 import dev.tauri.jsgcore.common.symbol.SymbolInterface;
 import dev.tauri.jsgdestiny.JSGDestiny;
@@ -23,18 +25,17 @@ import dev.tauri.jsgdestiny.common.state.DestinyBearingRendererState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class DestinyBearingBE extends BlockEntity implements ITickable, BEStateProvider, ScheduledTaskExecutorInterface, IStargateListener {
+public class DestinyBearingBE extends JSGBlockEntity implements ITickable, BEStateProvider, ScheduledTaskExecutorInterface, IStargateListener {
     public DestinyBearingBE(BlockPos pPos, BlockState pBlockState) {
         super(JSGDestinyBlockEntities.DESTINY_BEARING.get(), pPos, pBlockState);
     }
@@ -166,7 +167,7 @@ public class DestinyBearingBE extends BlockEntity implements ITickable, BEStateP
         }
     }
 
-    protected PacketDistributor.TargetPoint targetPoint;
+    protected TargetPoint targetPoint;
 
     @Nullable
     protected Stargate<?> getLinkableStargate() {
@@ -211,7 +212,7 @@ public class DestinyBearingBE extends BlockEntity implements ITickable, BEStateP
         if (!level.isClientSide) {
             var pos = getBlockPos();
             if (targetPoint == null) {
-                targetPoint = new PacketDistributor.TargetPoint(pos.getX(), pos.getY(), pos.getZ(), 512, level.dimension());
+                targetPoint = new TargetPoint(pos.getX(), pos.getY(), pos.getZ(), 512, level.dimension());
                 setChanged();
             }
             updateLink();
@@ -221,7 +222,8 @@ public class DestinyBearingBE extends BlockEntity implements ITickable, BEStateP
     }
 
     @Override
-    public void saveAdditional(@NotNull CompoundTag compound) {
+    @ParametersAreNonnullByDefault
+    public void saveAdditional(CompoundTag compound, net.minecraft.core.HolderLookup.Provider registries) {
         compound.put("scheduledTasks", ScheduledTask.serializeList(scheduledTasks));
         compound.putBoolean("isActive", isActive);
         if (gateBasePos != null)
@@ -229,7 +231,8 @@ public class DestinyBearingBE extends BlockEntity implements ITickable, BEStateP
     }
 
     @Override
-    public void load(@NotNull CompoundTag compound) {
+    @ParametersAreNonnullByDefault
+    protected void loadAdditional(CompoundTag compound, net.minecraft.core.HolderLookup.Provider registries) {
         ScheduledTask.deserializeList(compound.getCompound("scheduledTasks"), scheduledTasks, this);
         isActive = compound.getBoolean("isActive");
         if (compound.contains("gateBasePos"))
@@ -237,11 +240,11 @@ public class DestinyBearingBE extends BlockEntity implements ITickable, BEStateP
     }
 
     @Override
-    public PacketDistributor.TargetPoint getTargetPoint() {
+    public TargetPoint getTargetPoint() {
         if (getLevel() == null) return targetPoint;
         if (targetPoint == null) {
             var pos = getStateHandlerBlockPos();
-            targetPoint = new PacketDistributor.TargetPoint(pos.getX(), pos.getY(), pos.getZ(), 512, getLevel().dimension());
+            targetPoint = new TargetPoint(pos.getX(), pos.getY(), pos.getZ(), 512, getLevel().dimension());
         }
         return targetPoint;
     }
