@@ -6,9 +6,11 @@ import com.mojang.math.Axis;
 import dev.tauri.jsgcore.client.renderer.Activation;
 import dev.tauri.jsgcore.common.blockstate.JSGProperties;
 import dev.tauri.jsgcore.common.helper.BlockPosHelper;
+import dev.tauri.jsgcore.common.util.JSGColorUtil;
 import dev.tauri.jsgdestiny.client.ClientConstants;
 import dev.tauri.jsgdestiny.client.ModelsHolder;
 import dev.tauri.jsgdestiny.client.renderer.activation.BearingActivation;
+import dev.tauri.jsgdestiny.common.block.DestinyBearingBlock;
 import dev.tauri.jsgdestiny.common.blockentity.DestinyBearingBE;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.LightTexture;
@@ -18,6 +20,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.Direction;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.awt.*;
 
 public class DestinyBearingRenderer implements BlockEntityRenderer<DestinyBearingBE> {
     public DestinyBearingRenderer(BlockEntityRendererProvider.Context ignored) {
@@ -81,7 +84,13 @@ public class DestinyBearingRenderer implements BlockEntityRenderer<DestinyBearin
         Activation.iterate(rs.activations, blockEntity.getLevel().getGameTime(), partTicks, (ignored, state) -> rs.currentState = state);
 
         ClientConstants.LOADERS_HOLDER.texture().getTexture(ClientConstants.LOADERS_HOLDER.texture().getTextureResource(rs.currentState >= 0.3f ? TEXTURE_ON : TEXTURE_OFF)).bindTexture();
-        ModelsHolder.DESTINY_BEARING_LIGHT.render(stack, pBuffer, light, rs.currentState > 0, rs.currentState > 0 ? rs.currentState + 0.3f : 1f);
+        var ballLight = (rs.currentState > 0 ? rs.currentState + 0.3f : 1f);
+        var color = new Color(blockEntity.getBlockState().getBlock() instanceof DestinyBearingBlock bearing ? bearing.getRGBColor() : 0xffffffff, true);
+        color = new Color(JSGColorUtil.blendColors(color.getRGB(), 0xffffffff, 0.2f), true);
+        var r = color.getRed() / 255f;
+        var g = color.getGreen() / 255f;
+        var b = color.getBlue() / 255f;
+        ModelsHolder.DESTINY_BEARING_LIGHT.render(stack, pBuffer, light, overlay, rs.currentState > 0, r * ballLight, g * ballLight, b * ballLight, 1f, false);
         stack.popPose();
     }
 

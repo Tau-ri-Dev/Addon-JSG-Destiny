@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import java.util.List;
 
 public class JSGDestinyBlockEntities {
-    public static final RegistryObjectWrapper<BlockEntityType<DestinyBearingBE>> DESTINY_BEARING = JSGDestiny.REGISTRY_HELPER.be().register("destiny_bearing", RegistryHelper.beSupplier(DestinyBearingBE::new, JSGDestinyBlocks.DESTINY_BEARING));
+    public static final RegistryObjectWrapper<BlockEntityType<DestinyBearingBE>> DESTINY_BEARING = JSGDestiny.REGISTRY_HELPER.be().register("destiny_bearing", RegistryHelper.beSupplier(DestinyBearingBE::new, JSGDestinyBlocks.DESTINY_BEARING.values().stream().toList()));
     public static final RegistryObjectWrapper<BlockEntityType<DestinyFloorChevronBE>> DESTINY_FLOOR_CHEVRON = JSGDestiny.REGISTRY_HELPER.be().register("destiny_floor_chevron", RegistryHelper.beSupplier(DestinyFloorChevronBE::new, JSGDestinyBlocks.DESTINY_FLOOR_CHEVRON));
 
     public static void init() {

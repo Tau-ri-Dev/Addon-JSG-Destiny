@@ -35,7 +35,7 @@ public class JSGDestinyRecipeProvider extends CoreRecipeProvider {
                 .unlockedBy("has_titanium_igot", has(MaterialType.TITANIUM.forgeTags().ingots()))
                 .save(pWriter);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, JSGDestinyItems.BEARING_BALL.get())
+        /*ShapedRecipeBuilder.shaped(RecipeCategory.MISC, JSGDestinyItems.BEARING_BALL.get())
                 .group(JSGDestiny.MOD_ID + ":" + JSGDestinyItems.BEARING_BALL.getId().getPath())
                 .pattern("III")
                 .pattern("PBP")
@@ -61,7 +61,7 @@ public class JSGDestinyRecipeProvider extends CoreRecipeProvider {
                 .unlockedBy("has_copper_ingot", has(Tags.Items.INGOTS_COPPER))
                 .unlockedBy("has_titanium_ingot", has(MaterialType.TITANIUM.forgeTags().ingots()))
                 .unlockedBy("has_bulb", has(JSGDestinyItems.BEARING_BALL.get()))
-                .save(pWriter);
+                .save(pWriter);*/
 
     }
 }

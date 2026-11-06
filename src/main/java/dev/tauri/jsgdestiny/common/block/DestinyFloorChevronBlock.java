@@ -16,6 +16,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 public class DestinyFloorChevronBlock extends DestinyBearingBlock {
+    public DestinyFloorChevronBlock() {
+        super(0xffffff);
+    }
+
     @Override
     @ParametersAreNonnullByDefault
     @Nonnull
