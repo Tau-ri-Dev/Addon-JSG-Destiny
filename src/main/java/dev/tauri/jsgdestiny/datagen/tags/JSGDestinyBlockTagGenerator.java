@@ -36,11 +36,10 @@ public class JSGDestinyBlockTagGenerator extends CoreBlockTagGenerator {
         stargate_accessories.addTag(JSGDestinyBlockTags.DESTINY_BEARINGS);
 
 
-        tag(JSGDestinyBlockTags.DESTINY_FLOOR_CHEVRONS).add(JSGDestinyBlocks.DESTINY_FLOOR_CHEVRON.get());
-        /*var floorChevronTag = tag(JSGDestinyBlockTags.DESTINY_FLOOR_CHEVRONS;
+        var floorChevronTag = tag(JSGDestinyBlockTags.DESTINY_FLOOR_CHEVRONS);
         JSGDestinyBlocks.DESTINY_FLOOR_CHEVRON.forEach((color, regObj) -> {
             floorChevronTag.add(regObj.get());
-        });*/
+        });
         floor_accessories.addTag(JSGDestinyBlockTags.DESTINY_FLOOR_CHEVRONS);
         stargate_accessories.addTag(JSGDestinyBlockTags.DESTINY_FLOOR_CHEVRONS);
 

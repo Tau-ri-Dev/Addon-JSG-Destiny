@@ -10,16 +10,17 @@ import org.jetbrains.annotations.NotNull;
 
 public class JSGDestinyBlockLootTables extends CoreBlockLootTables {
 
-    public JSGDestinyBlockLootTables() {super ();}
+    public JSGDestinyBlockLootTables() {
+        super();
+    }
 
     @Override
     protected void generate() {
 
         for (DyeColor color : DyeColor.values()) {
             dropSelf(JSGDestinyBlocks.DESTINY_BEARING.get(color).get());
-            //dropSelf(JSGDestinyBlocks.DESTINY_FLOOR_CHEVRON.get(color).get());
+            dropSelf(JSGDestinyBlocks.DESTINY_FLOOR_CHEVRON.get(color).get());
         }
-        dropSelf(JSGDestinyBlocks.DESTINY_FLOOR_CHEVRON.get());
     }
 
     @Override

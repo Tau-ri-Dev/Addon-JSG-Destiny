@@ -8,9 +8,12 @@ import dev.tauri.jsgcore.client.renderer.AbstractItemBEWLR;
 import dev.tauri.jsgcore.mapping.JSGMapping;
 import dev.tauri.jsgdestiny.client.ModelsHolder;
 import dev.tauri.jsgdestiny.client.renderer.DestinyFloorChevronRenderer;
+import dev.tauri.jsgdestiny.common.item.DestinyFloorChevronItem;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
+
+import java.awt.*;
 
 public class DestinyFloorChevronBEWLR extends AbstractItemBEWLR {
     @Override
@@ -43,7 +46,11 @@ public class DestinyFloorChevronBEWLR extends AbstractItemBEWLR {
 
         var texture = JSGMapping.rl(JSG.MOD_ID, DestinyFloorChevronRenderer.BASE_TEXTURE.getPath().split("\\.")[0] + "_light");
         JSGApi.JSG_LOADERS_HOLDER.texture().getTexture(texture).bindTexture();
-        ModelsHolder.DESTINY_CHEVRON.render(stack, bufferSource, light, overlay, true, 1f, true);
+        var color = new Color(itemStack.getItem() instanceof DestinyFloorChevronItem chevron ? chevron.getRGBColor() : 0xffffffff, true);
+        var r = color.getRed() / 255f;
+        var g = color.getGreen() / 255f;
+        var b = color.getBlue() / 255f;
+        ModelsHolder.DESTINY_CHEVRON.render(stack, bufferSource, light, overlay, true, r, g, b, 1f, false);
         stack.popPose();
     }
 }

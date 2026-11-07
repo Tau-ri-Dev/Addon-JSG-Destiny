@@ -20,13 +20,13 @@ public class JSGDestinyLanguageProvider extends CoreLanguageProvider {
         addItem(JSGDestinyItems.UNIVERSAL_BULB);
 
         JSGDestinyItems.BEARING_BALLS.forEach((color, object) ->
-            addItem(object));
+                addItem(object));
 
         //BLOCKS
         JSGDestinyBlocks.DESTINY_BEARING.forEach((color, object) ->
                 addBlock(object));
-
-        addBlock(JSGDestinyBlocks.DESTINY_FLOOR_CHEVRON);
+        JSGDestinyBlocks.DESTINY_FLOOR_CHEVRON.forEach((color, object) ->
+                addBlock(object));
 
 
         //GENERIC TOOLTIPS

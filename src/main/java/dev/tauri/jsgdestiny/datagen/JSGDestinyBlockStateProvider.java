@@ -24,10 +24,8 @@ public class JSGDestinyBlockStateProvider extends CoreBlockStateProvider {
 
         //FLOOR CHEVRONS
         models().getBuilder("floor_chevron_generic").texture("particle", JSGMapping.rl(JSGCore.MOD_ID, "block/materials/naquadah_block"));
-
-        createObjModelBlock(JSGDestinyBlocks.DESTINY_FLOOR_CHEVRON, "floor_chevron_generic", null);
-        /*JSGDestinyBlocks.DESTINY_FLOOR_CHEVRON.forEach((color, regObj) -> {
-            createObjModelBlock(regObj, "bearing_generic", null);
-        });*/
+        JSGDestinyBlocks.DESTINY_FLOOR_CHEVRON.forEach((color, regObj) -> {
+            createObjModelBlock(regObj, "floor_chevron_generic", null);
+        });
     }
 }

@@ -1,7 +1,5 @@
 package dev.tauri.jsgdestiny.datagen;
 
-import dev.tauri.jsgcore.datagen.*;
-import dev.tauri.jsgcore.datagen.tag.*;
 import dev.tauri.jsgdestiny.JSGDestiny;
 import dev.tauri.jsgdestiny.datagen.loot.JSGDestinyLootTableProvider;
 import dev.tauri.jsgdestiny.datagen.tags.JSGDestinyBlockTagGenerator;

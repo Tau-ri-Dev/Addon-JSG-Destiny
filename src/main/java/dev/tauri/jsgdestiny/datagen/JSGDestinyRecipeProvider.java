@@ -73,9 +73,9 @@ public class JSGDestinyRecipeProvider extends CoreRecipeProvider {
                     .unlockedBy("has_ball", has(coloredBall))
                     .save(pWriter);
 
-            /*var coloredFloorChevron = JSGDestinyBlocks.DESTINY_FLOOR_CHEVRON.get(color).get();
+            var coloredFloorChevrons = JSGDestinyBlocks.DESTINY_FLOOR_CHEVRON.get(color).get();
 
-            ShapedRecipeBuilder.shaped(RecipeCategory.MISC, coloredBearing)
+            ShapedRecipeBuilder.shaped(RecipeCategory.MISC, coloredFloorChevrons)
                     .group(JSGDestiny.MOD_ID + ":floor_chevrons")
                     .pattern("CTC")
                     .pattern("GBG")
@@ -88,7 +88,7 @@ public class JSGDestinyRecipeProvider extends CoreRecipeProvider {
                     .unlockedBy("has_titanium_ingot", has(MaterialType.TITANIUM.forgeTags().ingots()))
                     .unlockedBy("has_glass_pane", has(glassPaneTag))
                     .unlockedBy("has_light_bulb", has(JSGDestinyItems.UNIVERSAL_BULB.get()))
-                    .save(pWriter);*/
+                    .save(pWriter);
         }
 
     }

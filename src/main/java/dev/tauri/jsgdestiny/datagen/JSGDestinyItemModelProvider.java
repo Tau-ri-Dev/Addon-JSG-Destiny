@@ -9,8 +9,6 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
-import java.util.List;
-
 public class JSGDestinyItemModelProvider extends CoreItemModelProvider {
     public JSGDestinyItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
         super(output, JSGDestiny.MOD_ID, existingFileHelper);
@@ -31,16 +29,14 @@ public class JSGDestinyItemModelProvider extends CoreItemModelProvider {
 
         //All INVENTORY OBJ MODELS
         JSGDestinyBlocks.DESTINY_BEARING.forEach((color, object) -> {
-            ItemDisplayContext[] allContext = ItemDisplayContext.values();
+            var allContext = ItemDisplayContext.values();
 
             blockOBJModel(object, allContext);
 
         });
 
-        List.of(JSGDestinyBlocks.DESTINY_FLOOR_CHEVRON
-        ).forEach(regObj -> {
-            ItemDisplayContext[] allContext = ItemDisplayContext.values();
-
+        JSGDestinyBlocks.DESTINY_FLOOR_CHEVRON.forEach((color, regObj) -> {
+            var allContext = ItemDisplayContext.values();
             blockOBJModel(regObj, allContext);
         });
 

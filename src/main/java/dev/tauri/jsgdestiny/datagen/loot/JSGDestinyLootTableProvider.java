@@ -10,7 +10,7 @@ import java.util.Set;
 public class JSGDestinyLootTableProvider {
     public static LootTableProvider create(PackOutput output) {
         return new LootTableProvider(output, Set.of(), List.of(
-           new LootTableProvider.SubProviderEntry(JSGDestinyBlockLootTables::new, LootContextParamSets.BLOCK)
+                new LootTableProvider.SubProviderEntry(JSGDestinyBlockLootTables::new, LootContextParamSets.BLOCK)
         ));
     }
 }
