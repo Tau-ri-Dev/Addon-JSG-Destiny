@@ -8,7 +8,6 @@ import dev.tauri.jsgdestiny.common.registry.tags.JSGDestinyBlockTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
-import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 import javax.annotation.Nullable;
@@ -32,9 +31,7 @@ public class JSGDestinyBlockTagGenerator extends CoreBlockTagGenerator {
         //JSGDestiny Tags
         var bearingTag = tag(JSGDestinyBlockTags.DESTINY_BEARINGS);
 
-        JSGDestinyBlocks.DESTINY_BEARING.forEach((color, regObj) -> {
-            bearingTag.add(regObj.get());
-        });
+        JSGDestinyBlocks.DESTINY_BEARING.forEach((color, regObj) -> bearingTag.add(regObj.get()));
         placeable_accessories.addTag(JSGDestinyBlockTags.DESTINY_BEARINGS);
         stargate_accessories.addTag(JSGDestinyBlockTags.DESTINY_BEARINGS);
 
