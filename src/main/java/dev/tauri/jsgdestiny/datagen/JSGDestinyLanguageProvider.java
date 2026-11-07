@@ -1,6 +1,5 @@
 package dev.tauri.jsgdestiny.datagen;
 
-import dev.tauri.jsgcore.JSGCore;
 import dev.tauri.jsgcore.datagen.CoreLanguageProvider;
 import dev.tauri.jsgdestiny.JSGDestiny;
 import dev.tauri.jsgdestiny.common.registry.JSGDestinyBlocks;

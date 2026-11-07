@@ -1,20 +1,16 @@
 package dev.tauri.jsgdestiny.datagen.loot;
 
-import dev.tauri.jsg.api.JSGApi;
 import dev.tauri.jsgcore.common.registry.helper.RegistryObjectWrapper;
+import dev.tauri.jsgcore.datagen.loot.CoreBlockLootTables;
 import dev.tauri.jsgdestiny.JSGDestiny;
 import dev.tauri.jsgdestiny.common.registry.JSGDestinyBlocks;
-import net.minecraft.data.loot.BlockLootSubProvider;
-import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Set;
+public class JSGDestinyBlockLootTables extends CoreBlockLootTables {
 
-public class JSGDestinyBlockLootTables extends BlockLootSubProvider {
-
-    public JSGDestinyBlockLootTables() {super (Set.of(), FeatureFlags.REGISTRY.allFlags());}
+    public JSGDestinyBlockLootTables() {super ();}
 
     @Override
     protected void generate() {

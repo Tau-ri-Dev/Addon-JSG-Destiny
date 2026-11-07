@@ -1,12 +1,10 @@
 package dev.tauri.jsgdestiny.datagen;
 
-import dev.tauri.jsg.common.registry.JSGItems;
 import dev.tauri.jsgcore.common.definition.material.MaterialType;
 import dev.tauri.jsgcore.datagen.CoreRecipeProvider;
 import dev.tauri.jsgdestiny.JSGDestiny;
 import dev.tauri.jsgdestiny.common.registry.JSGDestinyBlocks;
 import dev.tauri.jsgdestiny.common.registry.JSGDestinyItems;
-import net.minecraft.client.gui.components.toasts.TutorialToast;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -17,11 +15,12 @@ import net.minecraft.world.item.Item;
 import net.minecraftforge.common.Tags;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import javax.crypto.spec.RC2ParameterSpec;
 import java.util.function.Consumer;
 
 public class JSGDestinyRecipeProvider extends CoreRecipeProvider {
-    public JSGDestinyRecipeProvider(PackOutput pOutput) { super (pOutput); }
+    public JSGDestinyRecipeProvider(PackOutput pOutput) {
+        super(pOutput);
+    }
 
     @Override
     @ParametersAreNonnullByDefault

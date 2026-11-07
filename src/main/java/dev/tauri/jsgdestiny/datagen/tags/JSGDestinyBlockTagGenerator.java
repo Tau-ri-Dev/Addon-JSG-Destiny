@@ -1,6 +1,7 @@
 package dev.tauri.jsgdestiny.datagen.tags;
 
 import dev.tauri.jsgcore.common.registry.tag.CoreBlockTags;
+import dev.tauri.jsgcore.datagen.tag.CoreBlockTagGenerator;
 import dev.tauri.jsgdestiny.JSGDestiny;
 import dev.tauri.jsgdestiny.common.registry.JSGDestinyBlocks;
 import dev.tauri.jsgdestiny.common.registry.tags.JSGDestinyBlockTags;
@@ -14,7 +15,7 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.concurrent.CompletableFuture;
 
-public class JSGDestinyBlockTagGenerator extends BlockTagsProvider {
+public class JSGDestinyBlockTagGenerator extends CoreBlockTagGenerator {
     public JSGDestinyBlockTagGenerator(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, @Nullable ExistingFileHelper existingFileHelper) {
         super(output, lookupProvider, JSGDestiny.MOD_ID, existingFileHelper);
     }
