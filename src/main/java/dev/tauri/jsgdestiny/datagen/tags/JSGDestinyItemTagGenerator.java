@@ -1,7 +1,7 @@
 package dev.tauri.jsgdestiny.datagen.tags;
 
-import dev.tauri.jsg.JSG;
 import dev.tauri.jsgcore.datagen.tag.CoreItemTagGenerator;
+import dev.tauri.jsgdestiny.JSGDestiny;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.TagsProvider;
@@ -14,7 +14,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class JSGDestinyItemTagGenerator extends CoreItemTagGenerator {
     public JSGDestinyItemTagGenerator(PackOutput pOutput, CompletableFuture<HolderLookup.Provider> pLookupProvider, CompletableFuture<TagsProvider.TagLookup<Block>> pBlockTags, @Nullable ExistingFileHelper existingFileHelper) {
-        super(pOutput, pLookupProvider, pBlockTags, JSG.MOD_ID, existingFileHelper);
+        super(pOutput, pLookupProvider, pBlockTags, JSGDestiny.MOD_ID, existingFileHelper);
     }
 
     @Override
