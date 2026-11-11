@@ -13,7 +13,9 @@ import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.common.crafting.IntersectionIngredient;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.concurrent.CompletableFuture;
@@ -49,10 +51,10 @@ public class JSGDestinyRecipeProvider extends CoreRecipeProvider {
                     .pattern("PBP")
                     .pattern("PPP")
                     .define('I', MaterialType.NAQUADAH_ALLOY.forgeTags().ingots())
-                    .define('P', glassPaneTag)
+                    .define('P', IntersectionIngredient.of(Ingredient.of(Tags.Items.GLASS_PANES), Ingredient.of(glassPaneTag)))
                     .define('B', JSGDestinyItems.UNIVERSAL_BULB.get())
                     .unlockedBy("has_naquadah_ingot", has(MaterialType.NAQUADAH_ALLOY.forgeTags().ingots()))
-                    .unlockedBy("has_glass_pane", has(glassPaneTag))
+                    .unlockedBy("has_glass_pane", has(Tags.Items.GLASS_PANES))
                     .unlockedBy("has_bulb", has(JSGDestinyItems.UNIVERSAL_BULB.get()))
                     .save(pWriter);
 
@@ -82,36 +84,35 @@ public class JSGDestinyRecipeProvider extends CoreRecipeProvider {
                     .pattern("TGT")
                     .define('C', Tags.Items.INGOTS_COPPER)
                     .define('T', MaterialType.TITANIUM.forgeTags().ingots())
-                    .define('G', glassPaneTag)
+                    .define('G', IntersectionIngredient.of(Ingredient.of(Tags.Items.GLASS_PANES), Ingredient.of(glassPaneTag)))
                     .define('B', JSGDestinyItems.UNIVERSAL_BULB.get())
                     .unlockedBy("has_copper_ingot", has(Tags.Items.INGOTS_COPPER))
                     .unlockedBy("has_titanium_ingot", has(MaterialType.TITANIUM.forgeTags().ingots()))
-                    .unlockedBy("has_glass_pane", has(glassPaneTag))
+                    .unlockedBy("has_glass_pane", has(Tags.Items.GLASS_PANES))
                     .unlockedBy("has_light_bulb", has(JSGDestinyItems.UNIVERSAL_BULB.get()))
                     .save(pWriter);
         }
 
     }
 
-    // TODO: Fredy pls pls fix
     private TagKey<Item> getGlassPane(DyeColor color) {
         return switch (color) {
-            case BLACK -> Tags.Items.GLASS_PANES_BLACK;
-            case BLUE -> Tags.Items.GLASS_PANES_BLUE;
-            case BROWN -> Tags.Items.GLASS_PANES_BROWN;
-            case CYAN -> Tags.Items.GLASS_PANES_CYAN;
-            case GRAY -> Tags.Items.GLASS_PANES_GRAY;
-            case GREEN -> Tags.Items.GLASS_PANES_GREEN;
-            case LIGHT_BLUE -> Tags.Items.GLASS_PANES_LIGHT_BLUE;
-            case LIGHT_GRAY -> Tags.Items.GLASS_PANES_LIGHT_GRAY;
-            case LIME -> Tags.Items.GLASS_PANES_LIME;
-            case MAGENTA -> Tags.Items.GLASS_PANES_MAGENTA;
-            case ORANGE -> Tags.Items.GLASS_PANES_ORANGE;
-            case PINK -> Tags.Items.GLASS_PANES_PINK;
-            case PURPLE -> Tags.Items.GLASS_PANES_PURPLE;
-            case RED -> Tags.Items.GLASS_PANES_RED;
-            case WHITE -> Tags.Items.GLASS_PANES_WHITE;
-            case YELLOW -> Tags.Items.GLASS_PANES_YELLOW;
+            case BLACK -> Tags.Items.DYED_BLACK;
+            case BLUE -> Tags.Items.DYED_BLUE;
+            case BROWN -> Tags.Items.DYED_BROWN;
+            case CYAN -> Tags.Items.DYED_CYAN;
+            case GRAY -> Tags.Items.DYED_GRAY;
+            case GREEN -> Tags.Items.DYED_GREEN;
+            case LIGHT_BLUE -> Tags.Items.DYED_LIGHT_BLUE;
+            case LIGHT_GRAY -> Tags.Items.DYED_LIGHT_GRAY;
+            case LIME -> Tags.Items.DYED_LIME;
+            case MAGENTA -> Tags.Items.DYED_MAGENTA;
+            case ORANGE -> Tags.Items.DYED_ORANGE;
+            case PINK -> Tags.Items.DYED_PINK;
+            case PURPLE -> Tags.Items.DYED_PURPLE;
+            case RED -> Tags.Items.DYED_RED;
+            case WHITE -> Tags.Items.DYED_WHITE;
+            case YELLOW -> Tags.Items.DYED_YELLOW;
         };
     }
 }
