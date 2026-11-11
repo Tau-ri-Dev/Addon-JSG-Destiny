@@ -1,6 +1,7 @@
 package dev.tauri.jsgdestiny.common.block;
 
 import dev.tauri.jsg.api.stargate.Stargate;
+import dev.tauri.jsgcore.common.block.IColoredBlock;
 import dev.tauri.jsgcore.common.block.TickableBEBlock;
 import dev.tauri.jsgcore.common.block.util.IHighlightBlock;
 import dev.tauri.jsgcore.common.block.util.IItemBlock;
@@ -48,9 +49,12 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 import java.util.function.Supplier;
 
-public class DestinyBearingBlock extends TickableBEBlock implements IHighlightBlock, SimpleWaterloggedBlock, ITabbedItem, WrenchRotatable, IItemBlock {
-    public DestinyBearingBlock() {
+public class DestinyBearingBlock extends TickableBEBlock implements IHighlightBlock, SimpleWaterloggedBlock, ITabbedItem, WrenchRotatable, IItemBlock, IColoredBlock {
+    protected final int color;
+
+    public DestinyBearingBlock(int color) {
         super(Properties.ofFullCopy(Blocks.IRON_BLOCK).isViewBlocking((BlockState state, BlockGetter getter, BlockPos pos) -> false).noOcclusion());
+        this.color = color;
         this.registerDefaultState(
                 defaultBlockState()
                         .setValue(JSGProperties.FACING_HORIZONTAL_PROPERTY, Direction.NORTH)
@@ -173,5 +177,10 @@ public class DestinyBearingBlock extends TickableBEBlock implements IHighlightBl
     @Override
     public JSGBlockItem getItemBlock() {
         return new DestinyBearingItem(this);
+    }
+
+    @Override
+    public int getRGBColor() {
+        return color;
     }
 }

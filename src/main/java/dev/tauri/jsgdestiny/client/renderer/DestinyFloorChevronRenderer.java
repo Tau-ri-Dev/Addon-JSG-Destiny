@@ -10,9 +10,11 @@ import dev.tauri.jsgcore.client.renderer.Activation;
 import dev.tauri.jsgcore.common.blockstate.JSGProperties;
 import dev.tauri.jsgcore.common.helper.BlockPosHelper;
 import dev.tauri.jsgcore.common.registry.CoreBiomeOverlays;
+import dev.tauri.jsgcore.common.util.JSGColorUtil;
 import dev.tauri.jsgcore.mapping.JSGMapping;
 import dev.tauri.jsgdestiny.client.ModelsHolder;
 import dev.tauri.jsgdestiny.client.renderer.activation.BearingActivation;
+import dev.tauri.jsgdestiny.common.block.DestinyFloorChevronBlock;
 import dev.tauri.jsgdestiny.common.blockentity.DestinyBearingBE;
 import dev.tauri.jsgdestiny.common.blockentity.DestinyFloorChevronBE;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -21,6 +23,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.awt.*;
 
 public class DestinyFloorChevronRenderer implements BlockEntityRenderer<DestinyFloorChevronBE> {
     public DestinyFloorChevronRenderer(BlockEntityRendererProvider.Context ignored) {
@@ -64,7 +67,13 @@ public class DestinyFloorChevronRenderer implements BlockEntityRenderer<DestinyF
 
         var texture = JSGMapping.rl(JSG.MOD_ID, BASE_TEXTURE.getPath().split("\\.")[0] + "_light" + (rs.currentState >= 0.3f ? "" : "_off"));
         JSGApi.JSG_LOADERS_HOLDER.texture().getTexture(texture).bindTexture();
-        ModelsHolder.DESTINY_CHEVRON.render(stack, buffer, light, rs.currentState > 0, rs.currentState > 0 ? rs.currentState + 0.3f : 1f);
+        var chevronLight = (rs.currentState > 0 ? rs.currentState + 0.3f : 1f);
+        var color = new Color(blockEntity.getBlockState().getBlock() instanceof DestinyFloorChevronBlock chevron ? chevron.getRGBColor() : 0xffffffff, true);
+        color = new Color(JSGColorUtil.blendColors(color.getRGB(), 0xffffffff, 0.2f), true);
+        var r = color.getRed() / 255f;
+        var g = color.getGreen() / 255f;
+        var b = color.getBlue() / 255f;
+        ModelsHolder.DESTINY_CHEVRON.render(stack, buffer, light, overlay, rs.currentState > 0, r * chevronLight, g * chevronLight, b * chevronLight, 1f, false);
 
         stack.popPose();
     }

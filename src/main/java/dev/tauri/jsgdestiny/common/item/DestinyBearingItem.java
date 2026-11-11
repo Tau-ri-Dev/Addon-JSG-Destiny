@@ -1,6 +1,7 @@
 package dev.tauri.jsgdestiny.common.item;
 
 import dev.tauri.jsgcore.client.renderer.AbstractItemBEWLR;
+import dev.tauri.jsgcore.common.item.IColoredItem;
 import dev.tauri.jsgcore.common.item.JSGBlockItem;
 import dev.tauri.jsgdestiny.client.renderer.item.DestinyBearingBEWLR;
 import dev.tauri.jsgdestiny.common.block.DestinyBearingBlock;
@@ -15,9 +16,12 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class DestinyBearingItem extends JSGBlockItem {
+public class DestinyBearingItem extends JSGBlockItem implements IColoredItem {
+    protected final DestinyBearingBlock block;
+
     public DestinyBearingItem(DestinyBearingBlock pBlock) {
         super(pBlock, new Properties(), pBlock.getTabs());
+        this.block = pBlock;
     }
 
     @Override
@@ -30,5 +34,10 @@ public class DestinyBearingItem extends JSGBlockItem {
     @OnlyIn(Dist.CLIENT)
     public void initializeClient(Consumer<IClientItemExtensions> consumer) {
         consumer.accept(AbstractItemBEWLR.create(DestinyBearingBEWLR::new));
+    }
+
+    @Override
+    public int getRGBColor() {
+        return block.getRGBColor();
     }
 }
