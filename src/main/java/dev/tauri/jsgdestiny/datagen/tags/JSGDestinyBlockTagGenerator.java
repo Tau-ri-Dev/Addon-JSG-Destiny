@@ -30,15 +30,17 @@ public class JSGDestinyBlockTagGenerator extends CoreBlockTagGenerator {
 
         //JSGDestiny Tags
         var bearingTag = tag(JSGDestinyBlockTags.DESTINY_BEARINGS);
-
-        JSGDestinyBlocks.DESTINY_BEARING.forEach((color, regObj) -> bearingTag.add(regObj.get()));
+        JSGDestinyBlocks.DESTINY_BEARING.forEach((color, regObj) -> {
+            bearingTag.add(regObj.get());
+            tag(getDyeColorTag(color)).add(regObj.get());
+        });
         placeable_accessories.addTag(JSGDestinyBlockTags.DESTINY_BEARINGS);
         stargate_accessories.addTag(JSGDestinyBlockTags.DESTINY_BEARINGS);
-
 
         var floorChevronTag = tag(JSGDestinyBlockTags.DESTINY_FLOOR_CHEVRONS);
         JSGDestinyBlocks.DESTINY_FLOOR_CHEVRON.forEach((color, regObj) -> {
             floorChevronTag.add(regObj.get());
+            tag(getDyeColorTag(color)).add(regObj.get());
         });
         floor_accessories.addTag(JSGDestinyBlockTags.DESTINY_FLOOR_CHEVRONS);
         stargate_accessories.addTag(JSGDestinyBlockTags.DESTINY_FLOOR_CHEVRONS);
