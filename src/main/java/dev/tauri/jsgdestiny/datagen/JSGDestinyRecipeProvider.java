@@ -5,6 +5,7 @@ import dev.tauri.jsgcore.datagen.CoreRecipeProvider;
 import dev.tauri.jsgdestiny.JSGDestiny;
 import dev.tauri.jsgdestiny.common.registry.JSGDestinyBlocks;
 import dev.tauri.jsgdestiny.common.registry.JSGDestinyItems;
+import dev.tauri.jsgdestiny.common.registry.tags.JSGDestinyItemTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -66,7 +67,7 @@ public class JSGDestinyRecipeProvider extends CoreRecipeProvider {
                     .define('T', MaterialType.TITANIUM.forgeTags().ingots())
                     .define('N', MaterialType.NAQUADAH.forgeTags().ingots())
                     .define('R', MaterialType.NAQUADAH_ALLOY.forgeTags().ingots())
-                    .define('B', coloredBall)
+                    .define('B', IntersectionIngredient.of(Ingredient.of(JSGDestinyItemTags.BEARING_BALLS), Ingredient.of(glassColorTag)))
                     .unlockedBy("has_titanium_ingot", has(MaterialType.TITANIUM.forgeTags().ingots()))
                     .unlockedBy("has_naquadah_ingot", has(MaterialType.NAQUADAH.forgeTags().ingots()))
                     .unlockedBy("has_naquadah_alloy_ingot", has(MaterialType.NAQUADAH_ALLOY.forgeTags().ingots()))
