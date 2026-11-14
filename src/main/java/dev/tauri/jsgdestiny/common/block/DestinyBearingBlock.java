@@ -8,7 +8,6 @@ import dev.tauri.jsgcore.common.block.util.IItemBlock;
 import dev.tauri.jsgcore.common.block.util.WrenchRotatable;
 import dev.tauri.jsgcore.common.blockstate.JSGProperties;
 import dev.tauri.jsgcore.common.helper.BlockPosHelper;
-import dev.tauri.jsgcore.common.helper.ItemHelper;
 import dev.tauri.jsgcore.common.item.ITabbedItem;
 import dev.tauri.jsgcore.common.item.JSGBlockItem;
 import dev.tauri.jsgcore.common.registry.CoreTabs;
@@ -18,12 +17,10 @@ import dev.tauri.jsgdestiny.common.item.DestinyBearingItem;
 import dev.tauri.jsgdestiny.common.registry.JSGDestinyTabs;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.BlockGetter;
@@ -111,11 +108,6 @@ public class DestinyBearingBlock extends TickableBEBlock implements IHighlightBl
     @SuppressWarnings("deprecation")
     public @NotNull BlockState mirror(BlockState blockState, Mirror mirror) {
         return blockState.setValue(JSGProperties.FACING_HORIZONTAL_PROPERTY, BlockPosHelper.flipDir(blockState.getValue(JSGProperties.FACING_HORIZONTAL_PROPERTY), mirror));
-    }
-
-    @Override
-    public void appendHoverText(@NotNull ItemStack itemStack, @Nullable BlockGetter blockGetter, @NotNull List<Component> components, @NotNull TooltipFlag tooltipFlag) {
-        ItemHelper.applyGenericToolTip(this.getDescriptionId(), components, tooltipFlag);
     }
 
     @Override
