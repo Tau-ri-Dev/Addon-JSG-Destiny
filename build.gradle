@@ -112,7 +112,7 @@ tasks.withType(JavaCompile).configureEach {
     options.compilerArgs << '-Xmaxerrs' << '5000'
 }
 
-var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
+tasks.named('processResources', ProcessResources).configure {
     var replaceProperties = [
             minecraft_version      : minecraft_version,
             minecraft_version_range: minecraft_version_range,
@@ -128,10 +128,10 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
             core_version_range     : core_version_range,
             jsg_version_range      : jsg_version_range
     ]
+
     inputs.properties replaceProperties
-    expand replaceProperties
-    from "src/main/templates"
-    into "build/generated/sources/modMetadata"
+
+    filesMatching(['META-INF/neoforge.mods.toml', 'pack.mcmeta']) {
+        expand replaceProperties + [project: project]
+    }
 }
-sourceSets.main.resources.srcDir generateModMetadata
-neoForge.ideSyncTask generateModMetadata

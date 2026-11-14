@@ -37,6 +37,7 @@ public class JSGDestiny implements JSGAddon {
         JSGDestinyRegistriesInit.register(eventBus);
 
         JSGAddons.registerAddon(this);
+        DestinyMetrics.load();
     }
 
     @Override
